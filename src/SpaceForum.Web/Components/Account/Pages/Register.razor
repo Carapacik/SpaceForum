@@ -1,0 +1,132 @@
+@page "/account/register"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using SpaceForum.Application.Members
+@using SpaceForum.Application.Security
+@using SpaceForum.Infrastructure.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject CreateMemberProfileHandler CreateMemberProfile
+@inject ISecurityAuditWriter SecurityAudit
+@inject ILogger<Register> Logger
+@inject NavigationManager NavigationManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>@T["Create account · SpaceForum"]</PageTitle>
+
+<div class="sf-auth-shell">
+    <header class="mb-6"><p class="sf-eyebrow">@T["Join SpaceForum"]</p><h1 class="mt-2 font-display text-3xl font-bold">@T["Create an account"]</h1><p class="mt-2 text-content-muted">@T["Registration help"]</p></header>
+    <StatusMessage Message="@Message" />
+    <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="register" class="sf-auth-card sf-required-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+        <div>
+            <label for="Input.Login">@T["Login"]</label>
+            <InputText @bind-Value="Input.Login" id="Input.Login" class="form-control" autocomplete="username" minlength="3" maxlength="30" pattern="[a-z0-9]+" required aria-required="true" placeholder="spaceadmin" />
+            <p class="form-text mt-1">@T["Login help registration"]</p>
+            <ValidationMessage For="() => Input.Login" class="text-danger" />
+        </div>
+        <div>
+            <label for="Input.DisplayName">@T["Display name"]</label>
+            <InputText @bind-Value="Input.DisplayName" id="Input.DisplayName" class="form-control" autocomplete="name" minlength="2" maxlength="50" required aria-required="true" placeholder="Space Explorer" />
+            <ValidationMessage For="() => Input.DisplayName" class="text-danger" />
+        </div>
+        <div>
+            <label for="Input.Email">@T["Email"]</label>
+            <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" type="email" autocomplete="email" required aria-required="true" placeholder="name@example.com" />
+            <ValidationMessage For="() => Input.Email" class="text-danger" />
+        </div>
+        <div>
+            <label for="Input.Password">@T["Password"]</label>
+            <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="new-password" minlength="12" required aria-required="true" placeholder="At least 12 characters" />
+            <ValidationMessage For="() => Input.Password" class="text-danger" />
+        </div>
+        <div>
+            <label for="Input.ConfirmPassword">@T["Confirm password"]</label>
+            <InputText type="password" @bind-Value="Input.ConfirmPassword" id="Input.ConfirmPassword" class="form-control" autocomplete="new-password" minlength="12" required aria-required="true" placeholder="Repeat the same password" />
+            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+        </div>
+        <button type="submit" class="sf-submit w-full">@T["Register"]</button>
+        <div class="sf-auth-links"><a href="/account/login">@T["Already registered"]</a></div>
+    </EditForm>
+</div>
+
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = default!;
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+    protected override void OnInitialized() => Input ??= new();
+
+    public async Task RegisterUser()
+    {
+        Input.Login = Input.Login.Trim().ToLowerInvariant();
+        var user = new ApplicationUser();
+        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        var emailStore = (IUserEmailStore<ApplicationUser>)UserStore;
+        await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        var result = await UserManager.CreateAsync(user, Input.Password);
+        if (!result.Succeeded)
+        {
+            identityErrors = result.Errors;
+            return;
+        }
+
+        var profileResult = await CreateMemberProfile.HandleAsync(new(user.Id, Input.Login, Input.DisplayName), CancellationToken.None);
+        if (profileResult.Status is not CreateMemberProfileStatus.Created)
+        {
+            await UserManager.DeleteAsync(user);
+            identityErrors = [new IdentityError { Code = "ProfileCreationFailed", Description = profileResult.Error ?? "The member profile could not be created." }];
+            return;
+        }
+
+        var roleResult = await UserManager.AddToRoleAsync(user, ForumRoles.Member);
+        if (!roleResult.Succeeded)
+        {
+            await UserManager.DeleteAsync(user);
+            identityErrors = roleResult.Errors;
+            return;
+        }
+
+        await SecurityAudit.WriteAsync(new(SecurityEventTypes.AccountRegistered, user.Id, user.Id.ToString(), true), CancellationToken.None);
+        Logger.LogInformation("User created a new account with password.");
+
+        var code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(await UserManager.GenerateEmailConfirmationTokenAsync(user)));
+        var callbackUrl = NavigationManager.GetUriWithQueryParameters(
+            NavigationManager.ToAbsoluteUri("account/confirmemail").AbsoluteUri,
+            new Dictionary<string, object?> { ["userId"] = user.Id, ["code"] = code, ["returnUrl"] = ReturnUrl });
+        await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+        RedirectManager.RedirectTo("account/registerconfirmation", new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [RegularExpression("^[a-z0-9]{3,30}$", ErrorMessage = "Login can contain only lowercase English letters and digits.")]
+        public string Login { get; set; } = "";
+
+        [Required, StringLength(50, MinimumLength = 2)]
+        public string DisplayName { get; set; } = "";
+
+        [Required, EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required, StringLength(100, MinimumLength = 12), DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password), Compare("Password")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}

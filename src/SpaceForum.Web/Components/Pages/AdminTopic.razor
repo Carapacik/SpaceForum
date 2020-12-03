@@ -1,0 +1,40 @@
+@page "/admin/topics/{TopicId:guid}"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Policy = SpaceForum.Application.Security.ForumPolicies.AdministerForum)]
+@using System.ComponentModel.DataAnnotations
+@using SpaceForum.Application.Discussions
+@using SpaceForum.Application.Forums
+@using SpaceForum.Web.Security
+@using DiscussionTopicDetail = SpaceForum.Application.Discussions.TopicDetail
+@inject IForumFeatureRepository Features
+@inject IDiscussionRepository Discussions
+@inject GetCategoriesHandler Categories
+@inject NavigationManager Navigation
+
+<PageTitle>@T["Manage topic"] · SpaceForum</PageTitle>
+@if (detail is null) { <div class="sf-card p-8">@T["Topic not found"]</div> }
+else
+{
+    <div class="mx-auto max-w-3xl space-y-5"><header><p class="sf-eyebrow">@T["Administration"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Manage topic"]</h1></header>
+    @if(message is not null){<div class="alert" role="status">@message</div>}
+    <EditForm Model="Input" method="post" FormName="manage-topic" OnValidSubmit="SaveAsync" class="sf-card space-y-5 p-6"><DataAnnotationsValidator/><ValidationSummary class="text-danger"/>
+        <div><label for="Input.Title">@T["Title"]</label><InputText id="Input.Title" @bind-Value="Input.Title" class="form-control"/></div>
+        <div><label for="Input.CategoryId">@T["Category"]</label><InputSelect id="Input.CategoryId" @bind-Value="Input.CategoryId" class="form-select">@foreach(var category in categories){<option value="@category.Id">@category.Name</option>}</InputSelect></div>
+        <label class="flex items-center gap-3"><InputCheckbox @bind-Value="Input.IsSticky"/><span>@T["Pin this topic"]</span></label>
+        <fieldset><legend class="font-bold">@T["Tags"]</legend><div class="mt-2 flex flex-wrap gap-2">@foreach(var tag in tags){<label class="sf-tag cursor-pointer" style="@($"--tag-color:{tag.Color}")"><input type="checkbox" name="Input.TagIds" value="@tag.Id" checked="@Input.TagIds.Contains(tag.Id)"/> @tag.Name</label>}</div></fieldset>
+        <div class="flex gap-3"><button class="sf-button-primary" type="submit">@T["Save changes"]</button><a class="sf-button-secondary" href="@($"/d/{detail.Number}-{detail.Slug}")">@T["Cancel"]</a></div>
+    </EditForm></div>
+}
+@code {
+    [Parameter] public Guid TopicId {get;set;}
+    [SupplyParameterFromForm] private InputModel Input {get;set;} = default!;
+    [CascadingParameter] private HttpContext HttpContext {get;set;}=default!;
+    private DiscussionTopicDetail? detail; private IReadOnlyList<CategoryView> categories=[]; private IReadOnlyList<TagView> tags=[]; private string? message;
+    protected override async Task OnInitializedAsync()
+    {
+        Input ??= new(); var route=await Discussions.GetRouteAsync(TopicId,HttpContext.RequestAborted); if(route is null)return; detail=await Discussions.GetDetailAsync(route.Number,1,TopicPagination.PageSize,HttpContext.RequestAborted); if(detail is null)return;
+        categories=await Categories.ListAsync(HttpContext.RequestAborted); tags=await Features.GetTagsAsync(HttpContext.RequestAborted); var state=await Features.GetTopicFeaturesAsync(TopicId,HttpContext.User.GetMemberId(),HttpContext.RequestAborted);
+        if(string.IsNullOrEmpty(Input.Title)){Input.Title=detail.Title;Input.CategoryId=detail.CategoryId;Input.IsSticky=state.IsSticky;Input.TagIds=state.Tags.Select(tag=>tag.Id).ToArray();}
+    }
+    private async Task SaveAsync(){if(detail is null)return; if(await Features.UpdateTopicAsync(TopicId,Input.Title,Input.CategoryId,Input.IsSticky,Input.TagIds,HttpContext.RequestAborted)){var route=await Discussions.GetRouteAsync(TopicId,HttpContext.RequestAborted);Navigation.NavigateTo(route?.Path??"/");}else message=T["The topic could not be updated."];}
+    private sealed class InputModel { [Required,StringLength(160,MinimumLength=5)] public string Title {get;set;}=string.Empty; public Guid CategoryId {get;set;} public bool IsSticky {get;set;} public Guid[] TagIds {get;set;}=[]; }
+}

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SpaceForum.Application/SpaceForum.Application.csproj" />
+    <Project Path="src/SpaceForum.Domain/SpaceForum.Domain.csproj" />
+    <Project Path="src/SpaceForum.Infrastructure/SpaceForum.Infrastructure.csproj" />
+    <Project Path="src/SpaceForum.Web/SpaceForum.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SpaceForum.Application.Tests/SpaceForum.Application.Tests.csproj" />
+    <Project Path="tests/SpaceForum.ArchitectureTests/SpaceForum.ArchitectureTests.csproj" />
+    <Project Path="tests/SpaceForum.Domain.Tests/SpaceForum.Domain.Tests.csproj" />
+    <Project Path="tests/SpaceForum.IntegrationTests/SpaceForum.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

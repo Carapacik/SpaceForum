@@ -1,0 +1,71 @@
+@using Microsoft.AspNetCore.Identity
+@using SpaceForum.Application.Security
+@using SpaceForum.Infrastructure.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+<ul class="nav nav-pills flex-column">
+    <AuthorizeView Policy="@ForumPolicies.AdministerForum">
+        <Authorized>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="admin/overview">@T["Administration"]</NavLink>
+            </li>
+        </Authorized>
+    </AuthorizeView>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage" Match="NavLinkMatch.All">@T["Profile"]</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage/email">@T["Email"]</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage/changepassword">@T["Password"]</NavLink>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li class="nav-item">
+            <NavLink class="nav-link" href="account/manage/externallogins">@T["External logins"]</NavLink>
+        </li>
+    }
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage/twofactorauthentication">@T["Two-factor authentication"]</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage/passkeys">@T["Passkeys"]</NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="account/manage/personaldata">@T["Personal data"]</NavLink>
+    </li>
+    <li class="nav-item">
+        <button type="button" class="nav-link w-full text-left" data-dialog-open="sign-out-dialog">@T["Sign out"]</button>
+    </li>
+</ul>
+
+<dialog id="sign-out-dialog" class="sf-dialog" aria-labelledby="sign-out-title">
+    <div class="space-y-5 p-6">
+        <div>
+            <p class="sf-eyebrow">@T["Session"]</p>
+            <h2 id="sign-out-title" class="mt-2 font-display text-xl font-bold">@T["Sign out of SpaceForum?"]</h2>
+            <p class="mt-2 text-sm text-content-muted">@T["You will need to sign in again to post, vote, or manage your account."]</p>
+        </div>
+        <div class="flex flex-wrap justify-end gap-3 border-t pt-5">
+            <form method="dialog">
+                <button type="submit" class="sf-button-secondary">@T["Cancel"]</button>
+            </form>
+            <form action="account/logout" method="post">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="" />
+                <button type="submit" class="btn-danger">@T["Sign out"]</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+@code {
+    private bool hasExternalLogins;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    }
+}

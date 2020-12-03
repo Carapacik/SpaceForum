@@ -1,0 +1,15 @@
+{
+  "name": "spaceforum",
+  "private": true,
+  "scripts": {
+    "css:build": "tailwindcss -i ./src/SpaceForum.Web/Styles/app.css -o ./src/SpaceForum.Web/wwwroot/app.css --minify",
+    "css:watch": "tailwindcss -i ./src/SpaceForum.Web/Styles/app.css -o ./src/SpaceForum.Web/wwwroot/app.css --watch",
+    "js:build": "esbuild ./src/SpaceForum.Web/Scripts/spaceforum.js --bundle --minify --outfile=./src/SpaceForum.Web/wwwroot/js/spaceforum.min.js && esbuild ./src/SpaceForum.Web/Scripts/passkey-submit.js --bundle --minify --outfile=./src/SpaceForum.Web/wwwroot/js/passkey-submit.min.js",
+    "assets:build": "npm run css:build && npm run js:build"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "esbuild": "0.28.2",
+    "tailwindcss": "4.3.3"
+  }
+}

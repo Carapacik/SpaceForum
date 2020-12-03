@@ -1,0 +1,19 @@
+@inherits LayoutComponentBase
+@layout SpaceForum.Web.Components.Layout.MainLayout
+
+<section class="mx-auto max-w-[82rem] space-y-6">
+    <header>
+        <p class="sf-eyebrow">@T["Account"]</p>
+        <h1 class="mt-2 font-display text-3xl font-extrabold tracking-[-0.025em]">@T["Account settings"]</h1>
+        <p class="mt-2 text-sm text-content-muted">@T["Manage your public profile, security, sign-in methods, and personal data."]</p>
+    </header>
+
+    <div class="grid gap-6 large:grid-cols-[15rem_minmax(0,1fr)] large:items-start">
+        <aside class="sf-card p-3" aria-label="@T["Account settings"]">
+            <ManageNavMenu />
+        </aside>
+        <main class="sf-manage-panel min-w-0">
+            @Body
+        </main>
+    </div>
+</section>

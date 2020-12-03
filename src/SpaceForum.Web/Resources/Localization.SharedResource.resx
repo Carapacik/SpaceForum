@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Search discussions" xml:space="preserve"><value>Search discussions</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Sign in</value></data>
+  <data name="Join" xml:space="preserve"><value>Join</value></data>
+  <data name="Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="Browse" xml:space="preserve"><value>Browse</value></data>
+  <data name="Admin" xml:space="preserve"><value>Admin</value></data>
+  <data name="Welcome to SpaceForum" xml:space="preserve"><value>Welcome to SpaceForum</value></data>
+  <data name="Good conversations deserve room to breathe." xml:space="preserve"><value>Good conversations deserve room to breathe.</value></data>
+  <data name="Home description" xml:space="preserve"><value>Programming, computer games, practical answers, and community knowledge that stays useful over time.</value></data>
+  <data name="Start a topic" xml:space="preserve"><value>Start a topic</value></data>
+  <data name="Create an account" xml:space="preserve"><value>Create an account</value></data>
+  <data name="Explore categories" xml:space="preserve"><value>Explore categories</value></data>
+  <data name="Discussions" xml:space="preserve"><value>Discussions</value></data>
+  <data name="Latest" xml:space="preserve"><value>Latest</value></data>
+  <data name="Newest" xml:space="preserve"><value>Newest</value></data>
+  <data name="Oldest" xml:space="preserve"><value>Oldest</value></data>
+  <data name="Top" xml:space="preserve"><value>Top</value></data>
+  <data name="Highest rated" xml:space="preserve"><value>Highest rated</value></data>
+  <data name="Lowest rated" xml:space="preserve"><value>Lowest rated</value></data>
+  <data name="topics" xml:space="preserve"><value>topics</value></data>
+  <data name="replies" xml:space="preserve"><value>replies</value></data>
+  <data name="Search query" xml:space="preserve"><value>Search query</value></data>
+  <data name="Search help" xml:space="preserve"><value>Search topic titles and post text with PostgreSQL full-text indexes.</value></data>
+  <data name="Search placeholder" xml:space="preserve"><value>Try .NET architecture or multiplayer</value></data>
+  <data name="Results for" xml:space="preserve"><value>Results for</value></data>
+  <data name="No matching discussions." xml:space="preserve"><value>No matching discussions.</value></data>
+  <data name="Topic not found" xml:space="preserve"><value>Topic not found</value></data>
+  <data name="Posts" xml:space="preserve"><value>Posts</value></data>
+  <data name="of" xml:space="preserve"><value>of</value></data>
+  <data name="Reply" xml:space="preserve"><value>Reply</value></data>
+  <data name="Reply text" xml:space="preserve"><value>Reply text</value></data>
+  <data name="Post reply" xml:space="preserve"><value>Post reply</value></data>
+  <data name="Sign in to participate" xml:space="preserve"><value>Sign in to vote or join the discussion.</value></data>
+  <data name="Email or login" xml:space="preserve"><value>Email or login</value></data>
+  <data name="Password" xml:space="preserve"><value>Password</value></data>
+  <data name="Remember me" xml:space="preserve"><value>Remember me on this device</value></data>
+  <data name="Sign in with a passkey" xml:space="preserve"><value>Sign in with a passkey</value></data>
+  <data name="Forgot your password?" xml:space="preserve"><value>Forgot your password?</value></data>
+  <data name="Create a new account" xml:space="preserve"><value>Create a new account</value></data>
+  <data name="Welcome back" xml:space="preserve"><value>Welcome back</value></data>
+  <data name="Login help" xml:space="preserve"><value>Use your lowercase public login or account email.</value></data>
+  <data name="Login" xml:space="preserve"><value>Login</value></data>
+  <data name="Login help registration" xml:space="preserve"><value>Used in the profile URL: /members/login. Only lowercase English letters and digits are allowed.</value></data>
+  <data name="Display name" xml:space="preserve"><value>Display name</value></data>
+  <data name="Confirm password" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Register" xml:space="preserve"><value>Register</value></data>
+  <data name="Join SpaceForum" xml:space="preserve"><value>Join SpaceForum</value></data>
+  <data name="Registration help" xml:space="preserve"><value>Your login identifies the public profile; your email remains private.</value></data>
+  <data name="Already registered" xml:space="preserve"><value>Already have an account? Sign in</value></data>
+  <data name="Account recovery" xml:space="preserve"><value>Account recovery</value></data>
+  <data name="Recovery help" xml:space="preserve"><value>We will send a single-use reset link to your email.</value></data>
+  <data name="Send reset link" xml:space="preserve"><value>Send reset link</value></data>
+  <data name="Return to sign in" xml:space="preserve"><value>Return to sign in</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Choose a new password</value></data>
+  <data name="Password requirements" xml:space="preserve"><value>Use at least 12 characters with uppercase, lowercase, a digit, and a symbol.</value></data>
+  <data name="New password" xml:space="preserve"><value>New password</value></data>
+  <data name="Confirm new password" xml:space="preserve"><value>Confirm new password</value></data>
+  <data name="Save new password" xml:space="preserve"><value>Save new password</value></data>
+  <data name="Programming and games" xml:space="preserve"><value>Programming, computer games, and durable community knowledge.</value></data>
+  <data name="No categories yet" xml:space="preserve"><value>No categories yet</value></data>
+  <data name="No categories help" xml:space="preserve"><value>An administrator can create the first category.</value></data>
+  <data name="New topic" xml:space="preserve"><value>New topic</value></data>
+  <data name="No topics" xml:space="preserve"><value>No topics in this category yet.</value></data>
+  <data name="Create" xml:space="preserve"><value>Create</value></data>
+  <data name="Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Title" xml:space="preserve"><value>Title</value></data>
+  <data name="Message" xml:space="preserve"><value>Message</value></data>
+  <data name="Publish topic" xml:space="preserve"><value>Publish topic</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Check your email" xml:space="preserve"><value>Check your email</value></data>
+  <data name="Check email reset" xml:space="preserve"><value>Please check your email for the single-use password reset link.</value></data>
+  <data name="Password changed" xml:space="preserve"><value>Password changed</value></data>
+  <data name="Password changed help" xml:space="preserve"><value>Your password has been reset.</value></data>
+  <data name="This topic is closed. New replies are disabled." xml:space="preserve"><value>This topic is closed. New replies are disabled.</value></data>
+  <data name="Reopen topic" xml:space="preserve"><value>Reopen topic</value></data>
+  <data name="Close topic" xml:space="preserve"><value>Close topic</value></data>
+  <data name="Delete topic" xml:space="preserve"><value>Delete topic</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Delete this topic and all its replies?" xml:space="preserve"><value>Delete this topic and all its replies?</value></data>
+  <data name="Delete this reply?" xml:space="preserve"><value>Delete this reply?</value></data>
+  <data name="Resend email confirmation" xml:space="preserve"><value>Resend email confirmation</value></data>
+  <data name="Account security" xml:space="preserve"><value>Account security</value></data>
+  <data name="Enter the email address used for your account." xml:space="preserve"><value>Enter the email address used for your account.</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Resend confirmation" xml:space="preserve"><value>Resend confirmation</value></data>
+  <data name="Verification email sent. Please check your email." xml:space="preserve"><value>Verification email sent. Please check your email.</value></data>
+  <data name="Post permalink" xml:space="preserve"><value>Post permalink</value></data>
+  <data name="Copy link to post" xml:space="preserve"><value>Copy link to post</value></data>
+  <data name="Confirmation" xml:space="preserve"><value>Confirmation</value></data>
+  <data name="Close this topic?" xml:space="preserve"><value>Close this topic?</value></data>
+  <data name="Reopen this topic?" xml:space="preserve"><value>Reopen this topic?</value></data>
+  <data name="New replies will be disabled until the topic is reopened." xml:space="preserve"><value>New replies will be disabled until the topic is reopened.</value></data>
+  <data name="Members will be able to publish replies again." xml:space="preserve"><value>Members will be able to publish replies again.</value></data>
+  <data name="Delete this topic?" xml:space="preserve"><value>Delete this topic?</value></data>
+  <data name="The topic, every reply, and all votes will be permanently deleted." xml:space="preserve"><value>The topic, every reply, and all votes will be permanently deleted.</value></data>
+  <data name="This reply will be permanently removed from the discussion." xml:space="preserve"><value>This reply will be permanently removed from the discussion.</value></data>
+  <data name="Delete reply" xml:space="preserve"><value>Delete reply</value></data>
+  <data name="Markdown is supported, including fenced code blocks." xml:space="preserve"><value>Markdown is supported, including fenced code blocks.</value></data>
+  <data name="Reply to post" xml:space="preserve"><value>Reply to post</value></data>
+  <data name="wrote" xml:space="preserve"><value>wrote</value></data>
+  <data name="Composer mode" xml:space="preserve"><value>Composer mode</value></data>
+  <data name="Write" xml:space="preserve"><value>Write</value></data>
+  <data name="Preview" xml:space="preserve"><value>Preview</value></data>
+  <data name="Markdown tools" xml:space="preserve"><value>Markdown tools</value></data>
+  <data name="Bold" xml:space="preserve"><value>Bold</value></data>
+  <data name="Inline code" xml:space="preserve"><value>Inline code</value></data>
+  <data name="Quote" xml:space="preserve"><value>Quote</value></data>
+  <data name="Code block" xml:space="preserve"><value>Code block</value></data>
+  <data name="Drafts are saved on this device." xml:space="preserve"><value>Drafts are saved on this device.</value></data>
+  <data name="Nothing to preview yet." xml:space="preserve"><value>Nothing to preview yet.</value></data>
+  <data name="Preview is temporarily unavailable." xml:space="preserve"><value>Preview is temporarily unavailable.</value></data>
+  <data name="Change language" xml:space="preserve"><value>Change language</value></data>
+  <data name="Member not found" xml:space="preserve"><value>Member not found</value></data>
+  <data name="This profile may have been renamed or removed." xml:space="preserve"><value>This profile may have been renamed or removed.</value></data>
+  <data name="Return home" xml:space="preserve"><value>Return home</value></data>
+  <data name="Joined" xml:space="preserve"><value>Joined</value></data>
+  <data name="Location" xml:space="preserve"><value>Location</value></data>
+  <data name="Website" xml:space="preserve"><value>Website</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Notifications</value></data>
+  <data name="Activity" xml:space="preserve"><value>Activity</value></data>
+  <data name="Mark all as read" xml:space="preserve"><value>Mark all as read</value></data>
+  <data name="No notifications yet." xml:space="preserve"><value>No notifications yet.</value></data>
+  <data name="Unread" xml:space="preserve"><value>Unread</value></data>
+  <data name="mentioned you" xml:space="preserve"><value>mentioned you</value></data>
+  <data name="replied to your post" xml:space="preserve"><value>replied to your post</value></data>
+  <data name="posted in a followed topic" xml:space="preserve"><value>posted in a followed topic</value></data>
+  <data name="Bookmarks" xml:space="preserve"><value>Bookmarks</value></data>
+  <data name="Library" xml:space="preserve"><value>Library</value></data>
+  <data name="No bookmarked posts yet." xml:space="preserve"><value>No bookmarked posts yet.</value></data>
+  <data name="Moderation queue" xml:space="preserve"><value>Moderation queue</value></data>
+  <data name="Administration" xml:space="preserve"><value>Administration</value></data>
+  <data name="Reports" xml:space="preserve"><value>Reports</value></data>
+  <data name="No reports." xml:space="preserve"><value>No reports.</value></data>
+  <data name="Resolve" xml:space="preserve"><value>Resolve</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>Dismiss</value></data>
+  <data name="Edit history" xml:space="preserve"><value>Edit history</value></data>
+  <data name="Post history" xml:space="preserve"><value>Post history</value></data>
+  <data name="This post has no edits." xml:space="preserve"><value>This post has no edits.</value></data>
+  <data name="Before" xml:space="preserve"><value>Before</value></data>
+  <data name="After" xml:space="preserve"><value>After</value></data>
+  <data name="Pinned" xml:space="preserve"><value>Pinned</value></data>
+  <data name="Following" xml:space="preserve"><value>Following</value></data>
+  <data name="Follow" xml:space="preserve"><value>Follow</value></data>
+  <data name="Ignoring" xml:space="preserve"><value>Ignoring</value></data>
+  <data name="Ignore" xml:space="preserve"><value>Ignore</value></data>
+  <data name="In reply to" xml:space="preserve"><value>In reply to</value></data>
+  <data name="This post was hidden by a moderator." xml:space="preserve"><value>This post was hidden by a moderator.</value></data>
+  <data name="Bookmark" xml:space="preserve"><value>Bookmark</value></data>
+  <data name="Report" xml:space="preserve"><value>Report</value></data>
+  <data name="Reason" xml:space="preserve"><value>Reason</value></data>
+  <data name="Spam" xml:space="preserve"><value>Spam</value></data>
+  <data name="Abuse" xml:space="preserve"><value>Abuse</value></data>
+  <data name="Off topic" xml:space="preserve"><value>Off topic</value></data>
+  <data name="Other" xml:space="preserve"><value>Other</value></data>
+  <data name="Details" xml:space="preserve"><value>Details</value></data>
+  <data name="Send report" xml:space="preserve"><value>Send report</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Save changes" xml:space="preserve"><value>Save changes</value></data>
+  <data name="Edited" xml:space="preserve"><value>Edited</value></data>
+  <data name="Restore" xml:space="preserve"><value>Restore</value></data>
+  <data name="Hide" xml:space="preserve"><value>Hide</value></data>
+  <data name="Manage topic" xml:space="preserve"><value>Manage topic</value></data><data name="Pin this topic" xml:space="preserve"><value>Pin this topic</value></data><data name="Tags" xml:space="preserve"><value>Tags</value></data><data name="The topic could not be updated." xml:space="preserve"><value>The topic could not be updated.</value></data>
+  <data name="The tag will be removed from all topics." xml:space="preserve"><value>The tag will be removed from all topics.</value></data><data name="Delete tag?" xml:space="preserve"><value>Delete tag?</value></data><data name="New tag" xml:space="preserve"><value>New tag</value></data><data name="Name" xml:space="preserve"><value>Name</value></data><data name="Slug" xml:space="preserve"><value>Slug</value></data><data name="Description" xml:space="preserve"><value>Description</value></data><data name="Color" xml:space="preserve"><value>Color</value></data><data name="Position" xml:space="preserve"><value>Position</value></data><data name="Create tag" xml:space="preserve"><value>Create tag</value></data>
+  <data name="Users" xml:space="preserve"><value>Users</value></data><data name="Suspended" xml:space="preserve"><value>Suspended</value></data><data name="Change group" xml:space="preserve"><value>Change group</value></data><data name="Restore access for this user." xml:space="preserve"><value>Restore access for this user.</value></data><data name="Block sign-in and posting for this user." xml:space="preserve"><value>Block sign-in and posting for this user.</value></data><data name="Unsuspend user?" xml:space="preserve"><value>Unsuspend user?</value></data><data name="Suspend user?" xml:space="preserve"><value>Suspend user?</value></data><data name="Unsuspend" xml:space="preserve"><value>Unsuspend</value></data><data name="Suspend" xml:space="preserve"><value>Suspend</value></data>
+  <data name="Groups and permissions" xml:space="preserve"><value>Groups and permissions</value></data><data name="Save permissions" xml:space="preserve"><value>Save permissions</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Dashboard</value></data><data name="Members" xml:space="preserve"><value>Members</value></data><data name="Open reports" xml:space="preserve"><value>Open reports</value></data><data name="Private messages" xml:space="preserve"><value>Private messages</value></data><data name="Settings" xml:space="preserve"><value>Settings</value></data><data name="Audit log" xml:space="preserve"><value>Audit log</value></data>
+  <data name="Time" xml:space="preserve"><value>Time</value></data><data name="Event" xml:space="preserve"><value>Event</value></data><data name="Actor" xml:space="preserve"><value>Actor</value></data><data name="Subject" xml:space="preserve"><value>Subject</value></data><data name="Result" xml:space="preserve"><value>Result</value></data><data name="Success" xml:space="preserve"><value>Success</value></data><data name="Failed" xml:space="preserve"><value>Failed</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Settings saved.</value></data><data name="Forum name" xml:space="preserve"><value>Forum name</value></data><data name="Welcome banner" xml:space="preserve"><value>Welcome banner</value></data><data name="Accent color" xml:space="preserve"><value>Accent color</value></data><data name="Maintenance mode" xml:space="preserve"><value>Maintenance mode</value></data><data name="Save settings" xml:space="preserve"><value>Save settings</value></data>
+  <data name="New posts are available." xml:space="preserve"><value>New posts are available.</value></data><data name="Show new posts" xml:space="preserve"><value>Show new posts</value></data>
+  <data name="Messages" xml:space="preserve"><value>Messages</value></data><data name="Private conversations" xml:space="preserve"><value>Private conversations</value></data><data name="New message" xml:space="preserve"><value>New message</value></data><data name="No conversations yet." xml:space="preserve"><value>No conversations yet.</value></data><data name="Recipient login" xml:space="preserve"><value>Recipient login</value></data><data name="Send message" xml:space="preserve"><value>Send message</value></data><data name="Conversation not found." xml:space="preserve"><value>Conversation not found.</value></data>
+  <data name="Attach file" xml:space="preserve"><value>Attach file</value></data><data name="Attach" xml:space="preserve"><value>Attach</value></data><data name="avatar" xml:space="preserve"><value>avatar</value></data>
+  <data name="Topic count" xml:space="preserve"><value>Topics</value></data>
+  <data name="Attach media" xml:space="preserve"><value>Attach media</value></data>
+  <data name="Images up to 10 MB; MP4 or WebM video up to 15 MB." xml:space="preserve"><value>Images up to 10 MB; MP4 or WebM video up to 15 MB.</value></data>
+  <data name="Avatar image" xml:space="preserve"><value>Avatar image</value></data>
+  <data name="PNG, JPEG, or WebP up to 10 MB." xml:space="preserve"><value>PNG, JPEG, or WebP up to 10 MB.</value></data>
+  <data name="Upload avatar" xml:space="preserve"><value>Upload avatar</value></data>
+  <data name="Account settings" xml:space="preserve"><value>Account settings</value></data>
+  <data name="Manage your public profile, security, sign-in methods, and personal data." xml:space="preserve"><value>Manage your public profile, security, sign-in methods, and personal data.</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profile</value></data>
+  <data name="External logins" xml:space="preserve"><value>External logins</value></data>
+  <data name="Two-factor authentication" xml:space="preserve"><value>Two-factor authentication</value></data>
+  <data name="Passkeys" xml:space="preserve"><value>Passkeys</value></data>
+  <data name="Personal data" xml:space="preserve"><value>Personal data</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Session" xml:space="preserve"><value>Session</value></data>
+  <data name="Sign out of SpaceForum?" xml:space="preserve"><value>Sign out of SpaceForum?</value></data>
+  <data name="You will need to sign in again to post, vote, or manage your account." xml:space="preserve"><value>You will need to sign in again to post, vote, or manage your account.</value></data>
+  <data name="Create and organise public discussion spaces." xml:space="preserve"><value>Create and organise public discussion spaces.</value></data>
+  <data name="Existing categories" xml:space="preserve"><value>Existing categories</value></data>
+  <data name="View" xml:space="preserve"><value>View</value></data>
+  <data name="New category" xml:space="preserve"><value>New category</value></data>
+  <data name="Format" xml:space="preserve"><value>Format</value></data>
+  <data name="Parent" xml:space="preserve"><value>Parent</value></data>
+  <data name="Top level" xml:space="preserve"><value>Top level</value></data>
+  <data name="Create category" xml:space="preserve"><value>Create category</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Category deleted.</value></data>
+  <data name="The category still contains topics or child categories." xml:space="preserve"><value>The category still contains topics or child categories.</value></data>
+  <data name="The category no longer exists." xml:space="preserve"><value>The category no longer exists.</value></data>
+  <data name="Manage categories" xml:space="preserve"><value>Manage categories</value></data>
+  <data name="Only an empty category without child categories or topics can be deleted." xml:space="preserve"><value>Only an empty category without child categories or topics can be deleted.</value></data>
+  <data name="Delete {0}?" xml:space="preserve"><value>Delete {0}?</value></data>
+  <data name="Delete category" xml:space="preserve"><value>Delete category</value></data>
+  <data name="Discussion" xml:space="preserve"><value>Discussion</value></data>
+  <data name="Questions and answers" xml:space="preserve"><value>Questions and answers</value></data>
+  <data name="Announcement" xml:space="preserve"><value>Announcement</value></data>
+  <data name="The administrator identity could not be resolved." xml:space="preserve"><value>The administrator identity could not be resolved.</value></data>
+  <data name="The category could not be created." xml:space="preserve"><value>The category could not be created.</value></data>
+  <data name="Category created." xml:space="preserve"><value>Category created.</value></data>
+  <data name="Edit profile" xml:space="preserve"><value>Edit profile</value></data>
+  <data name="Public profile" xml:space="preserve"><value>Public profile</value></data>
+  <data name="This information appears beside your topics and replies. Your email and security settings remain private." xml:space="preserve"><value>This information appears beside your topics and replies. Your email and security settings remain private.</value></data>
+  <data name="Public URL" xml:space="preserve"><value>Public URL</value></data>
+  <data name="Biography" xml:space="preserve"><value>Biography</value></data>
+  <data name="A short introduction, up to 500 characters." xml:space="preserve"><value>A short introduction, up to 500 characters.</value></data>
+  <data name="Save profile" xml:space="preserve"><value>Save profile</value></data>
+  <data name="View public profile" xml:space="preserve"><value>View public profile</value></data>
+  <data name="Skip to content" xml:space="preserve"><value>Skip to content</value></data>
+  <data name="Something went wrong." xml:space="preserve"><value>Something went wrong.</value></data>
+  <data name="Reload" xml:space="preserve"><value>Reload</value></data>
+  <data name="Are you sure?" xml:space="preserve"><value>Are you sure?</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Uploading" xml:space="preserve"><value>Uploading</value></data>
+  <data name="The media could not be uploaded." xml:space="preserve"><value>The media could not be uploaded.</value></data>
+  <data name="Access denied" xml:space="preserve"><value>Access denied</value></data>
+  <data name="You do not have access to this resource." xml:space="preserve"><value>You do not have access to this resource.</value></data>
+  <data name="Login placeholder" xml:space="preserve"><value>admin or name@example.com</value></data>
+  <data name="Password placeholder" xml:space="preserve"><value>Enter your password</value></data>
+  <data name="or" xml:space="preserve"><value>or</value></data>
+  <data name="Invalid login or password." xml:space="preserve"><value>Invalid login or password.</value></data>
+  <data name="Error" xml:space="preserve"><value>Error</value></data>
+  <data name="Topic pages" xml:space="preserve"><value>Topic pages</value></data>
+  <data name="Previous" xml:space="preserve"><value>Previous</value></data>
+  <data name="Next" xml:space="preserve"><value>Next</value></data>
+  <data name="Add a new passkey" xml:space="preserve"><value>Add a new passkey</value></data>
+  <data name="Add another service to log in." xml:space="preserve"><value>Add another service to log in.</value></data>
+  <data name="Add authenticator app" xml:space="preserve"><value>Add authenticator app</value></data>
+  <data name="Android" xml:space="preserve"><value>Android</value></data>
+  <data name="Associate your {0} account." xml:space="preserve"><value>Associate your {0} account.</value></data>
+  <data name="Authenticator app" xml:space="preserve"><value>Authenticator app</value></data>
+  <data name="Authenticator code" xml:space="preserve"><value>Authenticator code</value></data>
+  <data name="Change email" xml:space="preserve"><value>Change email</value></data>
+  <data name="Change password" xml:space="preserve"><value>Change password</value></data>
+  <data name="Choose a new password · SpaceForum" xml:space="preserve"><value>Choose a new password · SpaceForum</value></data>
+  <data name="Configure authenticator app" xml:space="preserve"><value>Configure authenticator app</value></data>
+  <data name="Confirm email" xml:space="preserve"><value>Confirm email</value></data>
+  <data name="Confirm email change" xml:space="preserve"><value>Confirm email change</value></data>
+  <data name="Continue" xml:space="preserve"><value>Continue</value></data>
+  <data name="Create account · SpaceForum" xml:space="preserve"><value>Create account · SpaceForum</value></data>
+  <data name="Delete account" xml:space="preserve"><value>Delete account</value></data>
+  <data name="Delete data and close my account" xml:space="preserve"><value>Delete data and close my account</value></data>
+  <data name="Delete Personal Data" xml:space="preserve"><value>Delete Personal Data</value></data>
+  <data name="Deleting this data will permanently remove your account, and this cannot be recovered." xml:space="preserve"><value>Deleting this data will permanently remove your account, and this cannot be recovered.</value></data>
+  <data name="Deleting your data permanently removes the account and cannot be undone." xml:space="preserve"><value>Deleting your data permanently removes the account and cannot be undone.</value></data>
+  <data name="Disable 2FA" xml:space="preserve"><value>Disable 2FA</value></data>
+  <data name="Disable two-factor authentication (2FA)" xml:space="preserve"><value>Disable two-factor authentication (2FA)</value></data>
+  <data name="Download data" xml:space="preserve"><value>Download data</value></data>
+  <data name="Download the information associated with your account or permanently remove the account." xml:space="preserve"><value>Download the information associated with your account or permanently remove the account.</value></data>
+  <data name="Enter a name for your passkey" xml:space="preserve"><value>Enter a name for your passkey</value></data>
+  <data name="Enter a new name for your {0} passkey" xml:space="preserve"><value>Enter a new name for your {0} passkey</value></data>
+  <data name="Forget this browser" xml:space="preserve"><value>Forget this browser</value></data>
+  <data name="Generate a new set of recovery codes" xml:space="preserve"><value>Generate a new set of recovery codes</value></data>
+  <data name="Generate Recovery Codes" xml:space="preserve"><value>Generate Recovery Codes</value></data>
+  <data name="Generate two-factor authentication (2FA) recovery codes" xml:space="preserve"><value>Generate two-factor authentication (2FA) recovery codes</value></data>
+  <data name="If you lose your device and don't have the recovery codes you will lose access to your account." xml:space="preserve"><value>If you lose your device and don't have the recovery codes you will lose access to your account.</value></data>
+  <data name="If you reset your authenticator key your authenticator app will not work until you reconfigure it." xml:space="preserve"><value>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</value></data>
+  <data name="Invalid password reset" xml:space="preserve"><value>Invalid password reset</value></data>
+  <data name="Invalid user" xml:space="preserve"><value>Invalid user</value></data>
+  <data name="iOS" xml:space="preserve"><value>iOS</value></data>
+  <data name="Learn how to enable QR code generation" xml:space="preserve"><value>Learn how to enable QR code generation</value></data>
+  <data name="Locked out" xml:space="preserve"><value>Locked out</value></data>
+  <data name="Log in" xml:space="preserve"><value>Log in</value></data>
+  <data name="log in with a recovery code" xml:space="preserve"><value>log in with a recovery code</value></data>
+  <data name="Manage email" xml:space="preserve"><value>Manage email</value></data>
+  <data name="Manage your external logins" xml:space="preserve"><value>Manage your external logins</value></data>
+  <data name="Manage your passkeys" xml:space="preserve"><value>Manage your passkeys</value></data>
+  <data name="New email" xml:space="preserve"><value>New email</value></data>
+  <data name="No passkeys are registered." xml:space="preserve"><value>No passkeys are registered.</value></data>
+  <data name="Old password" xml:space="preserve"><value>Old password</value></data>
+  <data name="Passkey name" xml:space="preserve"><value>Passkey name</value></data>
+  <data name="Privacy" xml:space="preserve"><value>Privacy</value></data>
+  <data name="Privacy and cookie policy have not been accepted." xml:space="preserve"><value>Privacy and cookie policy have not been accepted.</value></data>
+  <data name="Put these codes in a safe place." xml:space="preserve"><value>Put these codes in a safe place.</value></data>
+  <data name="Recovery Code" xml:space="preserve"><value>Recovery Code</value></data>
+  <data name="Recovery code verification" xml:space="preserve"><value>Recovery code verification</value></data>
+  <data name="Recovery codes" xml:space="preserve"><value>Recovery codes</value></data>
+  <data name="Registered Logins" xml:space="preserve"><value>Registered Logins</value></data>
+  <data name="Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Rename" xml:space="preserve"><value>Rename</value></data>
+  <data name="Reset authenticator app" xml:space="preserve"><value>Reset authenticator app</value></data>
+  <data name="Reset authenticator key" xml:space="preserve"><value>Reset authenticator key</value></data>
+  <data name="Reset password · SpaceForum" xml:space="preserve"><value>Reset password · SpaceForum</value></data>
+  <data name="Reset recovery codes" xml:space="preserve"><value>Reset recovery codes</value></data>
+  <data name="reset your authenticator keys." xml:space="preserve"><value>reset your authenticator keys.</value></data>
+  <data name="Scan the QR code or enter this key in your authenticator app:" xml:space="preserve"><value>Scan the QR code or enter this key in your authenticator app:</value></data>
+  <data name="Send verification email" xml:space="preserve"><value>Send verification email</value></data>
+  <data name="Set password" xml:space="preserve"><value>Set password</value></data>
+  <data name="Set up authenticator app" xml:space="preserve"><value>Set up authenticator app</value></data>
+  <data name="Set your password" xml:space="preserve"><value>Set your password</value></data>
+  <data name="The password reset link is invalid." xml:space="preserve"><value>The password reset link is invalid.</value></data>
+  <data name="There are no external authentication services configured." xml:space="preserve"><value>There are no external authentication services configured.</value></data>
+  <data name="This account has been locked out, please try again later." xml:space="preserve"><value>This account has been locked out, please try again later.</value></data>
+  <data name="This action only disables 2FA." xml:space="preserve"><value>This action only disables 2FA.</value></data>
+  <data name="To use an authenticator app go through the following steps:" xml:space="preserve"><value>To use an authenticator app go through the following steps:</value></data>
+  <data name="Two-factor authentication (2FA)" xml:space="preserve"><value>Two-factor authentication (2FA)</value></data>
+  <data name="Update password" xml:space="preserve"><value>Update password</value></data>
+  <data name="Verification Code" xml:space="preserve"><value>Verification Code</value></data>
+  <data name="Verify" xml:space="preserve"><value>Verify</value></data>
+  <data name="You have {0} recovery codes left." xml:space="preserve"><value>You have {0} recovery codes left.</value></data>
+  <data name="You have 1 recovery code left." xml:space="preserve"><value>You have 1 recovery code left.</value></data>
+  <data name="You have no recovery codes left." xml:space="preserve"><value>You have no recovery codes left.</value></data>
+  <data name="You have reached the maximum number of allowed passkeys. Please delete one before adding a new one." xml:space="preserve"><value>You have reached the maximum number of allowed passkeys. Please delete one before adding a new one.</value></data>
+  <data name="You have successfully authenticated with {0}. Enter an email address below to finish registering." xml:space="preserve"><value>You have successfully authenticated with {0}. Enter an email address below to finish registering.</value></data>
+  <data name="You must accept the policy before you can enable two factor authentication." xml:space="preserve"><value>You must accept the policy before you can enable two factor authentication.</value></data>
+  <data name="You must generate a new set of recovery codes before you can log in with a recovery code." xml:space="preserve"><value>You must generate a new set of recovery codes before you can log in with a recovery code.</value></data>
+  <data name="Your account contains personal data that you have provided to SpaceForum." xml:space="preserve"><value>Your account contains personal data that you have provided to SpaceForum.</value></data>
+  <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve"><value>Your login is protected with an authenticator app. Enter your authenticator code below.</value></data>
+  <data name="Install a compatible authenticator app on your phone." xml:space="preserve"><value>Install a compatible authenticator app on your phone.</value></data>
+  <data name="After adding the key, enter the verification code generated by the app." xml:space="preserve"><value>After adding the key, enter the verification code generated by the app.</value></data>
+  <data name="Enter the code" xml:space="preserve"><value>Enter the code</value></data>
+  <data name="Generating new recovery codes does not change your authenticator key." xml:space="preserve"><value>Generating new recovery codes does not change your authenticator key.</value></data>
+  <data name="Disabling 2FA does not change your authenticator key." xml:space="preserve"><value>Disabling 2FA does not change your authenticator key.</value></data>
+  <data name="Remember this machine" xml:space="preserve"><value>Remember this machine</value></data>
+  <data name="No access to your authenticator device?" xml:space="preserve"><value>No access to your authenticator device?</value></data>
+  <data name="This recovery-code login will not be remembered until you use an authenticator code or disable 2FA." xml:space="preserve"><value>This recovery-code login will not be remembered until you use an authenticator code or disable 2FA.</value></data>
+  <data name="Breadcrumb" xml:space="preserve"><value>Breadcrumb</value></data>
+  <data name="Topic rating" xml:space="preserve"><value>Topic rating</value></data>
+  <data name="Upvote topic" xml:space="preserve"><value>Upvote topic</value></data>
+  <data name="Upvote" xml:space="preserve"><value>Upvote</value></data>
+  <data name="Topic score" xml:space="preserve"><value>Topic score</value></data>
+  <data name="Downvote topic" xml:space="preserve"><value>Downvote topic</value></data>
+  <data name="Downvote" xml:space="preserve"><value>Downvote</value></data>
+  <data name="Topic controls" xml:space="preserve"><value>Topic controls</value></data>
+  <data name="Post navigator" xml:space="preserve"><value>Post navigator</value></data>
+  <data name="Jump to post" xml:space="preserve"><value>Jump to post</value></data>
+  <data name="Primary navigation" xml:space="preserve"><value>Primary navigation</value></data>
+  <data name="Mobile navigation" xml:space="preserve"><value>Mobile navigation</value></data>
+  <data name="Sort discussions" xml:space="preserve"><value>Sort discussions</value></data>
+  <data name="Category not found" xml:space="preserve"><value>Category not found</value></data>
+  <data name="Choose a category" xml:space="preserve"><value>Choose a category</value></data>
+  <data name="Categories · SpaceForum" xml:space="preserve"><value>Categories · SpaceForum</value></data>
+  <data name="New topic · SpaceForum" xml:space="preserve"><value>New topic · SpaceForum</value></data>
+  <data name="SpaceForum · thoughtful conversations" xml:space="preserve"><value>SpaceForum · thoughtful conversations</value></data>
+  <data name="Search · SpaceForum" xml:space="preserve"><value>Search · SpaceForum</value></data>
+  <data name="No discussions yet. Start the first one." xml:space="preserve"><value>No discussions yet. Start the first one.</value></data>
+  <data name="Error." xml:space="preserve"><value>Error.</value></data>
+  <data name="An error occurred while processing your request." xml:space="preserve"><value>An error occurred while processing your request.</value></data>
+  <data name="Request ID:" xml:space="preserve"><value>Request ID:</value></data>
+  <data name="Development mode" xml:space="preserve"><value>Development mode</value></data>
+  <data name="The Development environment displays more detailed error information." xml:space="preserve"><value>The Development environment displays more detailed error information.</value></data>
+  <data name="Do not enable the Development environment in deployed applications." xml:space="preserve"><value>Do not enable the Development environment in deployed applications.</value></data>
+  <data name="It can expose sensitive exception information. Enable it only for local debugging and restart the application." xml:space="preserve"><value>It can expose sensitive exception information. Enable it only for local debugging and restart the application.</value></data>
+  <data name="Not found" xml:space="preserve"><value>Not found</value></data>
+  <data name="Sorry, the content you are looking for does not exist." xml:space="preserve"><value>Sorry, the content you are looking for does not exist.</value></data>
+  <data name="Log in using your {0} account" xml:space="preserve"><value>Log in using your {0} account</value></data>
+  <data name="Remove this {0} login from your account" xml:space="preserve"><value>Remove this {0} login from your account</value></data>
+  <data name="Unnamed passkey" xml:space="preserve"><value>Unnamed passkey</value></data>
+  <data name="Rename this passkey" xml:space="preserve"><value>Rename this passkey</value></data>
+  <data name="Remove this passkey from your account" xml:space="preserve"><value>Remove this passkey from your account</value></data>
+  <data name="SpaceForum is a modern community for programming, computer games, thoughtful discussions, and useful answers." xml:space="preserve"><value>SpaceForum is a modern community for programming, computer games, thoughtful discussions, and useful answers.</value></data>
+</root>

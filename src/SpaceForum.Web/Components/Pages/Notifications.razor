@@ -1,0 +1,44 @@
+@page "/notifications"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using SpaceForum.Application.Forums
+@using SpaceForum.Web.Security
+@inject IForumFeatureRepository Features
+
+<PageTitle>@T["Notifications"] · SpaceForum</PageTitle>
+
+<div class="space-y-5">
+    <header class="flex flex-wrap items-end justify-between gap-3">
+        <div><p class="sf-eyebrow">@T["Activity"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Notifications"]</h1></div>
+        @if (notifications.Any(item => !item.IsRead))
+        {
+            <form method="post" action="/actions/notifications/read"><AntiforgeryToken /><button class="sf-button-secondary" type="submit">@T["Mark all as read"]</button></form>
+        }
+    </header>
+    @if (notifications.Count == 0)
+    {
+        <div class="sf-card p-8 text-center text-content-muted">@T["No notifications yet."]</div>
+    }
+    else
+    {
+        <section class="sf-card divide-y overflow-hidden" aria-label="@T["Notifications"]">
+            @foreach (var item in notifications)
+            {
+                <a class="block px-5 py-4 transition-colors hover:bg-surface-muted @(!item.IsRead ? "bg-primary/5" : null)" href="@NotificationUrl(item)">
+                    <div class="flex items-start justify-between gap-4"><p><strong>@item.ActorDisplayName</strong> @NotificationText(item.Type)</p>@if (!item.IsRead){<span class="mt-2 size-2 rounded-full bg-primary" aria-label="@T["Unread"]"></span>}</div>
+                    <time class="mt-1 block text-sm text-content-muted" datetime="@item.CreatedAt.ToString("O")" data-local-time="date-time">@item.CreatedAt</time>
+                </a>
+            }
+        </section>
+    }
+</div>
+
+@code {
+    private IReadOnlyList<NotificationView> notifications = [];
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext.User.GetMemberId() is Guid memberId) notifications = await Features.GetNotificationsAsync(memberId, 50, HttpContext.RequestAborted);
+    }
+    private string NotificationText(string type) => type switch { "Mention" => T["mentioned you"], "PostReply" => T["replied to your post"], _ => T["posted in a followed topic"] };
+    private static string NotificationUrl(NotificationView item) => item.TopicNumber is long number && item.TopicSlug is string slug ? $"/d/{number}-{slug}{(item.PostNumber is int post ? $"#post-{post}" : null)}" : "/";
+}

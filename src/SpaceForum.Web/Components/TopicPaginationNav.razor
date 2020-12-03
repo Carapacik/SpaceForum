@@ -1,0 +1,31 @@
+@using SpaceForum.Application.Discussions
+
+@if (Topic.TotalPages > 1)
+{
+    <nav class="sf-card flex flex-wrap items-center justify-center gap-2 p-3" aria-label="@T["Topic pages"]">
+        <a class="sf-button-secondary @(Topic.Page == 1 ? "pointer-events-none opacity-50" : null)"
+           href="@PagePath(Topic.Page - 1)"
+           aria-disabled="@(Topic.Page == 1)">@T["Previous"]</a>
+        @for (var pageNumber = 1; pageNumber <= Topic.TotalPages; pageNumber++)
+        {
+            var selectedPage = pageNumber;
+            <a class="@(selectedPage == Topic.Page ? "sf-button-primary" : "sf-button-secondary")"
+               href="@PagePath(selectedPage)"
+               aria-current="@(selectedPage == Topic.Page ? "page" : null)">@selectedPage</a>
+        }
+        <a class="sf-button-secondary @(Topic.Page == Topic.TotalPages ? "pointer-events-none opacity-50" : null)"
+           href="@PagePath(Topic.Page + 1)"
+           aria-disabled="@(Topic.Page == Topic.TotalPages)">@T["Next"]</a>
+    </nav>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public TopicDetail Topic { get; set; } = default!;
+
+    private string PagePath(int page)
+    {
+        var canonicalPath = $"/d/{Topic.Number}-{Topic.Slug}";
+        return page <= 1 ? canonicalPath : $"{canonicalPath}?page={page}";
+    }
+}

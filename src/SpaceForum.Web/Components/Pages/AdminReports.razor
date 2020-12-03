@@ -1,0 +1,9 @@
+@page "/admin/reports"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Policy = SpaceForum.Application.Security.ForumPolicies.AdministerForum)]
+@using SpaceForum.Application.Forums
+@inject IForumFeatureRepository Features
+
+<PageTitle>@T["Moderation queue"] · SpaceForum</PageTitle>
+<div class="space-y-5"><header><p class="sf-eyebrow">@T["Administration"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Moderation queue"]</h1></header>
+@if (reports.Count == 0){<div class="sf-card p-8 text-center text-content-muted">@T["No reports."]</div>}else{<section class="space-y-3">@foreach(var report in reports){<article class="sf-card p-5"><div class="flex flex-wrap justify-between gap-3"><div><a class="font-bold text-primary" href="@($"/d/{report.TopicNumber}-{report.TopicSlug}#post-{report.PostNumber}")">#@report.PostNumber · @report.Reason</a><p class="mt-1 text-sm text-content-muted">@@@report.ReporterLogin · @report.Status</p></div>@if(report.Status == "Open"){<div class="flex gap-2"><form method="post" action="@($"/actions/reports/{report.Id}/status")"><AntiforgeryToken/><input type="hidden" name="status" value="Resolved"/><button class="sf-button-primary" type="submit">@T["Resolve"]</button></form><form method="post" action="@($"/actions/reports/{report.Id}/status")"><AntiforgeryToken/><input type="hidden" name="status" value="Dismissed"/><button class="sf-button-secondary" type="submit">@T["Dismiss"]</button></form></div>}</div>@if(!string.IsNullOrWhiteSpace(report.Details)){<p class="mt-3">@report.Details</p>}</article>}</section>}</div>
+@code { private IReadOnlyList<ReportView> reports = []; [CascadingParameter] private HttpContext HttpContext {get;set;}=default!; protected override async Task OnInitializedAsync()=>reports=await Features.GetReportsAsync(HttpContext.RequestAborted); }

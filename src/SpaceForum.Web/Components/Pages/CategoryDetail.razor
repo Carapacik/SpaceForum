@@ -1,0 +1,85 @@
+@page "/categories/{Slug}"
+
+@using SpaceForum.Application.Discussions
+@using SpaceForum.Application.Forums
+@using SpaceForum.Domain.Forums
+
+@inject GetCategoriesHandler GetCategories
+@inject GetDiscussionsHandler GetDiscussions
+
+<PageTitle>@(category is null ? "Category not found" : $"{category.Name} · SpaceForum")</PageTitle>
+
+@if (category is null)
+{
+    <section class="sf-card p-8 text-center"><h1 class="font-display text-2xl font-bold">@T["Category not found"]</h1></section>
+}
+else
+{
+    <div class="space-y-5">
+        <nav class="text-sm text-content-muted" aria-label="@T["Breadcrumb"]"><a class="hover:text-primary" href="/categories">@T["Categories"]</a> / @category.Name</nav>
+        <header class="sf-card p-5 medium:p-7">
+            <div class="flex flex-col gap-5 medium:flex-row medium:items-start medium:justify-between">
+                <div>
+                    <p class="sf-eyebrow">@FormatName(category.Format)</p>
+                    <h1 class="mt-2 font-display text-3xl font-bold">@category.Name</h1>
+                    <p class="mt-3 max-w-2xl text-content-muted">@category.Description</p>
+                </div>
+                <AuthorizeView>
+                    <Authorized>
+                        <a class="sf-button-primary shrink-0" href="@($"/topics/new?category={category.Slug}")">@T["New topic"]</a>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+        </header>
+
+        <section aria-labelledby="category-topics-heading">
+            <h2 id="category-topics-heading" class="mb-3 font-display text-xl font-bold">@T["topics"]</h2>
+            @if (topics.Count == 0)
+            {
+                <div class="sf-card p-8 text-center text-content-muted">@T["No topics"]</div>
+            }
+            else
+            {
+                <div class="sf-card divide-y overflow-hidden">
+                    @foreach (var topic in topics)
+                    {
+                        <a class="block px-5 py-4 transition-colors hover:bg-surface-muted" href="@($"/d/{topic.Number}-{topic.Slug}")">
+                            <h3 class="font-bold">@topic.Title</h3>
+                            <p class="mt-1 text-sm text-content-muted">@topic.AuthorDisplayName · @topic.ReplyCount @T["replies"] · score @topic.Score · <time datetime="@topic.LastActivityAt.ToString("O")" data-local-time="relative">@topic.LastActivityAt.ToString("MMM d, yyyy")</time></p>
+                        </a>
+                    }
+                </div>
+            }
+        </section>
+    </div>
+}
+
+@code {
+    private CategoryView? category;
+    private IReadOnlyList<TopicListItem> topics = [];
+
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        category = await GetCategories.BySlugAsync(Slug, HttpContext.RequestAborted);
+        if (category is null)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
+
+        topics = await GetDiscussions.ByCategoryAsync(category.Id, HttpContext.RequestAborted);
+    }
+
+    private static string FormatName(CategoryFormat format) => format switch
+    {
+        CategoryFormat.QuestionAndAnswer => "Questions and answers",
+        CategoryFormat.Announcement => "Announcements",
+        _ => "Discussion",
+    };
+}

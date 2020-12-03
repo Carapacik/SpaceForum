@@ -1,0 +1,13 @@
+.git
+.vs
+.idea
+**/bin
+**/obj
+**/TestResults
+node_modules
+tests
+docs
+StarForum.Application
+StarForum.Infrastructure
+StarForum.WebApi
+StarForum.sln

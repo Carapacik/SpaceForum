@@ -1,0 +1,17 @@
+@page "/bookmarks"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using SpaceForum.Application.Forums
+@using SpaceForum.Web.Security
+@inject IForumFeatureRepository Features
+
+<PageTitle>@T["Bookmarks"] · SpaceForum</PageTitle>
+<div class="space-y-5">
+    <header><p class="sf-eyebrow">@T["Library"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Bookmarks"]</h1></header>
+    @if (bookmarks.Count == 0) { <div class="sf-card p-8 text-center text-content-muted">@T["No bookmarked posts yet."]</div> }
+    else { <section class="sf-card divide-y overflow-hidden">@foreach (var item in bookmarks){<a class="block px-5 py-4 hover:bg-surface-muted" href="@($"/d/{item.TopicNumber}-{item.TopicSlug}#post-{item.PostNumber}")"><strong>@item.TopicTitle</strong><span class="mt-1 block text-sm text-content-muted">#@item.PostNumber · @item.AuthorDisplayName</span></a>}</section> }
+</div>
+@code {
+    private IReadOnlyList<BookmarkView> bookmarks = [];
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+    protected override async Task OnInitializedAsync() { if (HttpContext.User.GetMemberId() is Guid memberId) bookmarks = await Features.GetBookmarksAsync(memberId, HttpContext.RequestAborted); }
+}

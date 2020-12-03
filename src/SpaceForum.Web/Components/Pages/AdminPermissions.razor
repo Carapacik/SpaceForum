@@ -1,0 +1,9 @@
+@page "/admin/permissions"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Policy = SpaceForum.Application.Security.ForumPolicies.AdministerForum)]
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using SpaceForum.Application.Security
+@inject RoleManager<IdentityRole<Guid>> Roles
+<PageTitle>@T["Groups and permissions"] · SpaceForum</PageTitle>
+<div class="space-y-5"><header><p class="sf-eyebrow">@T["Administration"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Groups and permissions"]</h1></header><div class="grid gap-5 expanded:grid-cols-2">@foreach(var group in groups){<form class="sf-card space-y-4 p-5" method="post" action="@($"/actions/groups/{group.Name}/permissions")"><AntiforgeryToken/><h2 class="font-display text-xl font-bold">@group.Name</h2>@foreach(var permission in ForumPermissions.All){<label class="flex items-center gap-3"><input type="checkbox" name="permissions" value="@permission" checked="@group.Permissions.Contains(permission)"/><span>@permission</span></label>}<button class="sf-button-primary" type="submit">@T["Save permissions"]</button></form>}</div></div>
+@code { private readonly List<GroupRow> groups=[]; protected override async Task OnInitializedAsync(){foreach(var name in new[]{ForumRoles.Member,ForumRoles.Moderator}){var role=await Roles.FindByNameAsync(name);if(role is null)continue;groups.Add(new(name,(await Roles.GetClaimsAsync(role)).Where(c=>c.Type==ForumPermissions.ClaimType).Select(c=>c.Value).ToHashSet()));}} private sealed record GroupRow(string Name,HashSet<string> Permissions); }

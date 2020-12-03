@@ -1,0 +1,523 @@
+@import "tailwindcss" source(none);
+
+@source "../Components/**/*.razor";
+@source "../Components/**/*.cs";
+
+@theme {
+    --breakpoint-medium: 37.5rem;
+    --breakpoint-expanded: 52.5rem;
+    --breakpoint-large: 75rem;
+    --breakpoint-xlarge: 100rem;
+
+    --color-canvas: var(--sf-canvas);
+    --color-surface: var(--sf-surface);
+    --color-surface-muted: var(--sf-surface-muted);
+    --color-content: var(--sf-content);
+    --color-content-muted: var(--sf-content-muted);
+    --color-line: var(--sf-line);
+    --color-primary: var(--sf-primary);
+    --color-primary-hover: var(--sf-primary-hover);
+    --color-accent: var(--sf-accent);
+    --color-success: var(--sf-success);
+    --color-warning: var(--sf-warning);
+    --color-danger: var(--sf-danger);
+
+    --font-sans: "Nunito", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+    --radius-control: 0.625rem;
+    --radius-card: 0.875rem;
+    --shadow-overlay: 0 1rem 3rem rgb(15 23 42 / 0.18);
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("/fonts/nunito/nunito-variable.ttf") format("truetype-variations");
+    font-style: normal;
+    font-weight: 200 1000;
+    font-display: swap;
+}
+
+:root {
+    color-scheme: light;
+    --sf-canvas: #f7f8fc;
+    --sf-surface: #ffffff;
+    --sf-surface-muted: #f0f2f8;
+    --sf-content: #111827;
+    --sf-content-muted: #5b6474;
+    --sf-line: #d8deea;
+    --sf-primary: #6d28d9;
+    --sf-primary-hover: #5b21b6;
+    --sf-accent: #a21caf;
+    --sf-success: #15803d;
+    --sf-warning: #b45309;
+    --sf-danger: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --sf-canvas: #090d18;
+        --sf-surface: #111827;
+        --sf-surface-muted: #192235;
+        --sf-content: #f3f4f6;
+        --sf-content-muted: #a7b0c0;
+        --sf-line: #2d384d;
+        --sf-primary: #c084fc;
+        --sf-primary-hover: #d8b4fe;
+        --sf-accent: #f0abfc;
+        --sf-success: #4ade80;
+        --sf-warning: #fbbf24;
+        --sf-danger: #f87171;
+    }
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --sf-canvas: #090d18;
+    --sf-surface: #111827;
+    --sf-surface-muted: #192235;
+    --sf-content: #f3f4f6;
+    --sf-content-muted: #a7b0c0;
+    --sf-line: #2d384d;
+    --sf-primary: #c084fc;
+    --sf-primary-hover: #d8b4fe;
+    --sf-accent: #f0abfc;
+    --sf-success: #4ade80;
+    --sf-warning: #fbbf24;
+    --sf-danger: #f87171;
+}
+
+@layer base {
+    * {
+        border-color: var(--sf-line);
+    }
+
+    html {
+        min-width: 20rem;
+        background: var(--sf-canvas);
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100dvh;
+        margin: 0;
+        background: var(--sf-canvas);
+        color: var(--sf-content);
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--sf-primary) 28%, transparent);
+    }
+
+    :focus-visible {
+        outline: 0.1875rem solid color-mix(in srgb, var(--sf-primary) 72%, white);
+        outline-offset: 0.1875rem;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+
+    a {
+        color: inherit;
+    }
+}
+
+@layer components {
+    .sf-card {
+        @apply rounded-card border bg-surface;
+    }
+
+    .sf-button {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control px-4 py-2 text-sm font-semibold transition-colors;
+    }
+
+    .sf-button-primary,
+    .btn-primary {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-hover;
+    }
+
+    .sf-submit {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-accent px-5 py-2 text-sm font-bold text-white transition-colors hover:brightness-110;
+    }
+
+    .sf-required-form:has(:invalid) .sf-submit {
+        @apply cursor-not-allowed opacity-45;
+    }
+
+    .sf-sort-link {
+        @apply inline-flex min-h-9 items-center rounded-control px-3 text-sm font-semibold text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-sort-link.active {
+        @apply bg-primary/10 text-primary;
+    }
+
+    .sf-vote-button {
+        @apply inline-grid size-9 place-items-center rounded-control text-lg font-bold text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-vote-button.active {
+        @apply bg-primary/15 text-primary;
+    }
+
+    .sf-inline-danger {
+        @apply rounded-control px-2 py-1 text-xs font-bold text-danger transition-colors hover:bg-danger/10;
+    }
+
+    .sf-post {
+        transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    .sf-post:target,
+    .sf-post.is-selected {
+        border-color: color-mix(in srgb, var(--sf-accent) 72%, var(--sf-line));
+        background: color-mix(in srgb, var(--sf-accent) 6%, var(--sf-surface));
+        box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--sf-accent) 22%, transparent);
+    }
+
+    .sf-post:target > header,
+    .sf-post.is-selected > header {
+        background: color-mix(in srgb, var(--sf-accent) 12%, var(--sf-surface-muted));
+    }
+
+    .sf-post-link-button {
+        @apply inline-grid size-8 place-items-center rounded-control text-content-muted transition-colors hover:bg-primary/10 hover:text-primary;
+    }
+
+    .sf-post-link-button.is-copied {
+        @apply bg-success/15 text-success;
+    }
+
+    .sf-markdown {
+        @apply leading-7 wrap-break-word;
+    }
+
+    .sf-markdown > :first-child {
+        margin-top: 0;
+    }
+
+    .sf-markdown > :last-child {
+        margin-bottom: 0;
+    }
+
+    .sf-markdown p,
+    .sf-markdown ul,
+    .sf-markdown ol,
+    .sf-markdown blockquote,
+    .sf-markdown pre,
+    .sf-markdown table {
+        @apply my-4;
+    }
+
+    .sf-markdown ul {
+        @apply list-disc pl-6;
+    }
+
+    .sf-markdown ol {
+        @apply list-decimal pl-6;
+    }
+
+    .sf-markdown li + li {
+        @apply mt-1;
+    }
+
+    .sf-markdown a {
+        @apply font-semibold text-primary underline decoration-primary/35 underline-offset-2 hover:text-primary-hover;
+    }
+
+    .sf-markdown blockquote {
+        @apply border-l-4 border-primary/40 pl-4 text-content-muted;
+    }
+
+    .sf-markdown code {
+        @apply rounded bg-surface-muted px-1.5 py-0.5 font-mono text-[0.925em];
+    }
+
+    .sf-markdown pre {
+        @apply overflow-x-auto rounded-control border bg-[#101522] p-4 text-[#f3f4f6];
+    }
+
+    .sf-markdown pre code {
+        @apply bg-transparent p-0 text-sm;
+    }
+
+    .sf-markdown table {
+        @apply block max-w-full overflow-x-auto border-collapse;
+    }
+
+    .sf-markdown th,
+    .sf-markdown td {
+        @apply border px-3 py-2 text-left;
+    }
+
+    .sf-markdown th {
+        @apply bg-surface-muted font-bold;
+    }
+
+    .sf-post-action {
+        @apply rounded-control px-2 py-1 text-xs font-bold text-primary transition-colors hover:bg-primary/10;
+    }
+
+    .sf-composer-tabs {
+        @apply flex border-b;
+    }
+
+    .sf-composer-tab {
+        @apply -mb-px min-h-10 border-b-2 border-transparent px-4 text-sm font-bold text-content-muted transition-colors hover:text-content;
+    }
+
+    .sf-composer-tab[aria-selected="true"] {
+        @apply border-primary text-primary;
+    }
+
+    .sf-composer-toolbar {
+        @apply mb-2 flex flex-wrap gap-1;
+    }
+
+    .sf-composer-toolbar button {
+        @apply inline-grid min-h-9 min-w-9 place-items-center rounded-control border bg-surface px-2 text-sm font-bold text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-attachment-button {
+        @apply inline-flex min-h-9 cursor-pointer items-center rounded-control border bg-surface px-3 text-sm font-bold text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-composer-preview {
+        @apply min-h-44 rounded-control border bg-surface-muted/40 p-4;
+    }
+
+    .sf-language-switch {
+        @apply inline-flex min-h-9 min-w-11 items-center justify-center rounded-control border bg-surface px-2 text-xs font-extrabold uppercase tracking-wide text-content-muted transition-colors hover:bg-surface-muted hover:text-primary;
+    }
+
+    .sf-badge {
+        @apply inline-flex rounded-full bg-primary/12 px-2.5 py-1 text-xs font-extrabold text-primary;
+    }
+
+    .sf-tag {
+        @apply inline-flex rounded-full border px-2.5 py-1 text-xs font-bold;
+        border-color: color-mix(in srgb, var(--tag-color) 50%, var(--sf-line));
+        background: color-mix(in srgb, var(--tag-color) 12%, var(--sf-surface));
+    }
+
+    .sf-reaction {
+        @apply inline-flex min-h-9 items-center gap-1 rounded-full border bg-surface px-3 text-sm font-bold text-content-muted transition-colors hover:border-primary/50 hover:text-primary;
+    }
+
+    .sf-reaction.active {
+        @apply border-primary/50 bg-primary/10 text-primary;
+    }
+
+    .sf-popover-form {
+        @apply absolute bottom-10 left-0 z-30 w-72 space-y-3 rounded-card border bg-surface p-4 shadow-overlay;
+    }
+
+    .sf-live-update {
+        @apply sticky top-20 z-30 items-center justify-between gap-4 rounded-card border border-primary/30 bg-surface p-3 shadow-lg;
+    }
+
+    .sf-live-update:not([hidden]) {
+        @apply flex;
+    }
+
+    .sf-search-box {
+        @apply relative;
+    }
+
+    .sf-search-input {
+        @apply min-h-11 w-full rounded-control border bg-canvas py-2 pl-10 pr-12 text-sm text-content placeholder:text-content-muted hover:bg-surface-muted focus:bg-surface;
+    }
+
+    .sf-search-results {
+        @apply absolute inset-x-0 top-[calc(100%+0.5rem)] z-50 overflow-hidden rounded-card border bg-surface shadow-xl;
+    }
+
+    .sf-search-result {
+        @apply block border-b px-4 py-3 transition-colors last:border-b-0 hover:bg-surface-muted;
+    }
+
+    .sf-search-result-title {
+        @apply block truncate text-sm font-bold;
+    }
+
+    .sf-search-result-meta {
+        @apply mt-0.5 block truncate text-xs text-content-muted;
+    }
+
+    .sf-post-slider {
+        width: 1.5rem;
+        height: min(60vh, 28rem);
+        min-height: 12rem;
+        accent-color: var(--sf-primary);
+        cursor: grab;
+        direction: ltr;
+        writing-mode: vertical-lr;
+    }
+
+    .sf-post-slider:active {
+        cursor: grabbing;
+    }
+
+    .sf-auth-shell {
+        @apply mx-auto max-w-xl;
+    }
+
+    .sf-auth-card {
+        @apply space-y-5 rounded-card border bg-surface p-5 medium:p-7;
+    }
+
+    .sf-auth-links {
+        @apply flex flex-col gap-2 border-t pt-5 text-sm;
+    }
+
+    .sf-auth-links a {
+        @apply font-semibold text-primary hover:text-primary-hover;
+    }
+
+    .sf-manage-panel {
+        @apply rounded-card border bg-surface p-5 medium:p-7;
+    }
+
+    .sf-manage-panel > h3 {
+        @apply mb-6 font-display text-2xl font-bold;
+    }
+
+    .sf-dialog {
+        width: min(30rem, calc(100vw - 2rem));
+        margin: auto;
+        border: 1px solid var(--sf-line);
+        border-radius: var(--radius-card);
+        background: var(--sf-surface);
+        box-shadow: var(--shadow-overlay);
+        color: var(--sf-content);
+    }
+
+    .sf-dialog::backdrop {
+        background: color-mix(in srgb, #090d18 70%, transparent);
+        backdrop-filter: blur(0.1875rem);
+    }
+
+    .form-floating {
+        @apply flex flex-col gap-1.5;
+    }
+
+    .form-floating > label {
+        order: -1;
+    }
+
+    .sf-button-secondary,
+    .btn {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control border bg-surface px-4 py-2 text-sm font-semibold text-content transition-colors hover:bg-surface-muted;
+    }
+
+    .sf-icon-button {
+        @apply inline-flex size-11 items-center justify-center rounded-control text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-nav-link {
+        @apply flex min-h-11 items-center gap-3 rounded-control px-3 text-sm font-medium text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+
+    .sf-nav-link.active {
+        @apply bg-surface-muted text-primary;
+    }
+
+    .sf-eyebrow {
+        @apply text-xs font-bold uppercase tracking-[0.16em] text-primary;
+    }
+
+    .sf-input,
+    .form-control,
+    .form-select {
+        @apply min-h-11 w-full rounded-control border bg-surface px-3 py-2 text-content placeholder:text-content-muted;
+    }
+
+    .btn-danger {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-control bg-danger px-4 py-2 text-sm font-semibold text-white transition-colors;
+    }
+
+    .alert {
+        @apply rounded-control border bg-surface-muted p-4 text-sm;
+    }
+
+    .alert-danger,
+    .text-danger,
+    .validation-message {
+        @apply text-danger;
+    }
+
+    .form-label,
+    label {
+        @apply mb-1 block text-sm font-semibold text-content;
+    }
+
+    .form-check {
+        @apply flex items-start gap-2;
+    }
+
+    .form-check-input {
+        @apply mt-1 size-4 accent-primary;
+    }
+
+    .form-text {
+        @apply text-sm text-content-muted;
+    }
+
+    .nav {
+        @apply flex flex-wrap gap-1;
+    }
+
+    .nav-link {
+        @apply flex min-h-11 items-center gap-3 rounded-control px-3 text-sm font-medium text-content-muted transition-colors hover:bg-surface-muted hover:text-content;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+#blazor-error-ui {
+    display: none;
+    position: fixed;
+    right: 1rem;
+    bottom: 5.5rem;
+    left: 1rem;
+    z-index: 1000;
+    border: 1px solid var(--sf-danger);
+    border-radius: var(--radius-card);
+    background: var(--sf-surface);
+    box-shadow: var(--shadow-overlay);
+    padding: 1rem;
+    color: var(--sf-content);
+}
+
+#blazor-error-ui .dismiss {
+    float: right;
+    cursor: pointer;
+}
+
+@media (min-width: 52.5rem) {
+    #blazor-error-ui {
+        right: 1.5rem;
+        bottom: 1.5rem;
+        left: auto;
+        width: min(28rem, calc(100vw - 3rem));
+    }
+}

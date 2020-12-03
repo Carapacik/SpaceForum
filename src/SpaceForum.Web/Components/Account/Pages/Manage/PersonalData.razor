@@ -1,0 +1,46 @@
+@page "/account/manage/personaldata"
+
+@using Microsoft.AspNetCore.Identity
+@using SpaceForum.Infrastructure.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>@T["Personal data"]</PageTitle>
+
+<StatusMessage />
+<div class="mb-6">
+    <p class="sf-eyebrow">@T["Privacy"]</p>
+    <h1 class="mt-2 font-display text-2xl font-bold">@T["Personal data"]</h1>
+    <p class="mt-2 max-w-2xl text-sm text-content-muted">
+        @T["Download the information associated with your account or permanently remove the account."]
+    </p>
+</div>
+
+<div class="max-w-2xl space-y-5">
+    <p>@T["Your account contains personal data that you have provided to SpaceForum."]</p>
+    <div class="alert alert-danger" role="alert">
+        <strong>@T["Deleting your data permanently removes the account and cannot be undone."]</strong>
+    </div>
+    <div class="flex flex-wrap items-center gap-3 border-t pt-5">
+        <form action="account/manage/downloadpersonaldata" method="post">
+            <AntiforgeryToken />
+            <button class="sf-button-primary" type="submit">@T["Download data"]</button>
+        </form>
+        <a href="account/manage/deletepersonaldata" class="btn-danger">@T["Delete account"]</a>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user  = await UserManager.GetUserAsync(HttpContext.User);
+        if (user is null)
+        {
+            RedirectManager.RedirectToInvalidUser(UserManager, HttpContext);
+        }
+    }
+}

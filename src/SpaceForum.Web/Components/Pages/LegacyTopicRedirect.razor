@@ -1,0 +1,26 @@
+@page "/topics/{TopicId:guid}"
+
+@using SpaceForum.Application.Discussions
+
+@inject GetDiscussionsHandler GetDiscussions
+@inject NavigationManager NavigationManager
+
+@code {
+    [Parameter]
+    public Guid TopicId { get; set; }
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var route = await GetDiscussions.RouteAsync(TopicId, HttpContext.RequestAborted);
+        if (route is null)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
+
+        NavigationManager.NavigateTo(route.Path, replace: true);
+    }
+}

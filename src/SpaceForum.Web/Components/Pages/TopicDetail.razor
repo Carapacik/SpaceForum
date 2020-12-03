@@ -1,0 +1,391 @@
+@page "/d/{TopicPath}"
+
+@using System.ComponentModel.DataAnnotations
+@using SpaceForum.Application.Discussions
+@using SpaceForum.Application.Security
+@using SpaceForum.Application.Forums
+@using SpaceForum.Domain.Discussions
+@using SpaceForum.Web.Security
+
+@inject GetDiscussionsHandler GetDiscussions
+@inject CreateReplyHandler CreateReplyHandler
+@inject VoteTopicHandler VoteTopicHandler
+@inject NavigationManager NavigationManager
+@inject SpaceForum.Web.Rendering.ForumMarkdownRenderer Markdown
+@inject IForumFeatureRepository Features
+
+<PageTitle>@(topic is null ? T["Topic not found"] : $"{topic.Title} · SpaceForum")</PageTitle>
+
+@if (topic is null)
+{
+    <section class="sf-card p-8 text-center"><h1 class="font-display text-2xl font-bold">@T["Topic not found"]</h1></section>
+}
+else
+{
+    <div class="space-y-5" data-post-stream data-page-size="@topic.PageSize" data-current-page="@topic.Page" data-live-topic-id="@topic.Id" data-live-last-post="@topic.LastPostNumber" data-live-message="@T["New posts are available."]" data-live-label="@T["Show new posts"]">
+        <div class="sf-live-update" data-live-update hidden></div>
+        <nav class="text-sm text-content-muted" aria-label="@T["Breadcrumb"]"><a class="hover:text-primary" href="/categories">@T["Categories"]</a> / <a class="hover:text-primary" href="@($"/categories/{topic.CategorySlug}")">@topic.CategoryName</a></nav>
+        <header class="flex flex-col gap-4 medium:flex-row medium:items-start medium:justify-between">
+            <div>
+                <div class="flex flex-wrap items-center gap-2">@if(topicFeatures.IsSticky){<span class="sf-badge">@T["Pinned"]</span>}@foreach(var tag in topicFeatures.Tags){<span class="sf-tag" style="@($"--tag-color:{tag.Color}")">@tag.Name</span>}</div>
+                <h1 class="mt-2 font-display text-3xl font-extrabold tracking-[-0.025em]">@topic.Title</h1>
+            </div>
+            <EditForm Model="Vote" method="post" FormName="vote-topic" OnSubmit="VoteAsync" data-preserve-topic-position class="flex shrink-0 items-center rounded-control border bg-surface p-1" aria-label="@T["Topic rating"]">
+                <button type="submit" name="Vote.Value" value="1" class="sf-vote-button @(voteState.Vote == 1 ? "active" : null)" aria-label="@T["Upvote topic"]" title="@T["Upvote"]">↑</button>
+                <output class="min-w-10 px-2 text-center text-sm font-bold" aria-label="@T["Topic score"]">@FormatScore(voteState.Score)</output>
+                <button type="submit" name="Vote.Value" value="-1" class="sf-vote-button @(voteState.Vote == -1 ? "active" : null)" aria-label="@T["Downvote topic"]" title="@T["Downvote"]">↓</button>
+            </EditForm>
+        </header>
+
+        @if (topic.IsClosed)
+        {
+            <div class="alert" role="status">@T["This topic is closed. New replies are disabled."]</div>
+        }
+
+        <AuthorizeView Context="topicControlsContext">
+            <Authorized>
+                <div class="flex flex-wrap gap-2">
+                    <form method="post" action="@($"/actions/topics/{topic.Id}/subscription")"><AntiforgeryToken/><input type="hidden" name="state" value="@(topicFeatures.Subscription == "Following" ? "off" : "following")"/><input type="hidden" name="lastPostNumber" value="@topic.LastPostNumber"/><input type="hidden" name="returnPage" value="@topic.Page"/><button class="@(topicFeatures.Subscription == "Following" ? "sf-button-primary" : "sf-button-secondary")" type="submit">@(topicFeatures.Subscription == "Following" ? T["Following"] : T["Follow"])</button></form>
+                    <form method="post" action="@($"/actions/topics/{topic.Id}/subscription")"><AntiforgeryToken/><input type="hidden" name="state" value="@(topicFeatures.Subscription == "Ignoring" ? "off" : "ignoring")"/><input type="hidden" name="lastPostNumber" value="@topic.LastPostNumber"/><input type="hidden" name="returnPage" value="@topic.Page"/><button class="@(topicFeatures.Subscription == "Ignoring" ? "sf-button-primary" : "sf-button-secondary")" type="submit">@(topicFeatures.Subscription == "Ignoring" ? T["Ignoring"] : T["Ignore"])</button></form>
+                </div>
+                @if (topic.AuthorId == topicControlsContext.User.GetMemberId() || topicControlsContext.User.IsInRole(ForumRoles.Administrator))
+                {
+                    <div class="flex flex-wrap gap-2" aria-label="@T["Topic controls"]">
+                        <form method="post"
+                              action="@($"/actions/topics/{topic.Id}/close")"
+                              data-confirm-submit="@(topic.IsClosed ? T["Members will be able to publish replies again."] : T["New replies will be disabled until the topic is reopened."])"
+                              data-confirm-title="@(topic.IsClosed ? T["Reopen this topic?"] : T["Close this topic?"])"
+                              data-confirm-label="@(topic.IsClosed ? T["Reopen topic"] : T["Close topic"])">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="isClosed" value="@((!topic.IsClosed).ToString().ToLowerInvariant())" />
+                            <input type="hidden" name="returnPage" value="@topic.Page" />
+                            <button class="sf-button-secondary" type="submit">@(topic.IsClosed ? T["Reopen topic"] : T["Close topic"])</button>
+                        </form>
+                        @if (topicControlsContext.User.IsInRole(ForumRoles.Administrator))
+                        {
+                            <a class="sf-button-secondary" href="@($"/admin/topics/{topic.Id}")">@T["Manage topic"]</a>
+                            <form method="post"
+                                  action="@($"/actions/topics/{topic.Id}/delete")"
+                                  data-confirm-submit="@T["The topic, every reply, and all votes will be permanently deleted."]"
+                                  data-confirm-title="@T["Delete this topic?"]"
+                                  data-confirm-label="@T["Delete topic"]"
+                                  data-confirm-tone="danger">
+                                <AntiforgeryToken />
+                                <button class="btn-danger" type="submit">@T["Delete topic"]</button>
+                            </form>
+                        }
+                    </div>
+                }
+            </Authorized>
+        </AuthorizeView>
+
+        @if (voteError is not null)
+        {
+            <div class="alert alert-danger" role="alert">@voteError</div>
+        }
+
+        <div class="grid gap-6 large:grid-cols-[minmax(0,1fr)_10rem]">
+            <div class="space-y-5">
+                <TopicPaginationNav Topic="topic" />
+                <section class="space-y-4" aria-label="@T["Posts"]">
+                    @foreach (var post in topic.Posts)
+                    {
+                        <article id="@($"post-{post.Number}")" data-post-number="@post.Number" tabindex="-1" class="sf-post sf-card scroll-mt-24 overflow-hidden">
+                            <header class="flex flex-wrap items-center justify-between gap-2 border-b bg-surface-muted px-5 py-3">
+                                <a class="font-bold hover:text-primary" href="@($"/members/{post.AuthorLogin}")">@post.AuthorDisplayName</a>
+                                <div class="flex items-center gap-2">
+                                    <a class="text-sm text-content-muted hover:text-primary" href="@PostPath(post.Number)" data-enhance-nav="false" data-post-permalink aria-label="@($"{T["Post permalink"]} {post.Number}")">#@post.Number · <time datetime="@post.CreatedAt.ToString("O")" data-local-time="date-time">@post.CreatedAt.ToString("MMM d, yyyy HH:mm")</time></a>
+                                    <button class="sf-post-link-button" type="button" data-copy-post-link="@($"post-{post.Number}")" aria-label="@($"{T["Copy link to post"]} {post.Number}")" title="@T["Copy link to post"]">
+                                        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                            <path d="M9.5 14.5 14.5 9.5" />
+                                            <path d="m7.2 16.8-1.4 1.4a3.4 3.4 0 0 1-4.8-4.8l4-4a3.4 3.4 0 0 1 4.8 0" />
+                                            <path d="m16.8 7.2 1.4-1.4A3.4 3.4 0 0 1 23 10.6l-4 4a3.4 3.4 0 0 1-4.8 0" />
+                                        </svg>
+                                    </button>
+                                    @if (!topic.IsClosed)
+                                    {
+                                        <AuthorizeView>
+                                            <Authorized>
+                                                <button class="sf-post-action" type="button"
+                                                        data-reply-to-post
+                                                        data-reply-login="@post.AuthorLogin"
+                                                        data-reply-profile="@($"/members/{post.AuthorLogin}")"
+                                                        data-reply-permalink="@PostPath(post.Number)"
+                                                        data-reply-post-id="@post.Id"
+                                                        data-reply-attribution="@T["wrote"]"
+                                                        data-reply-excerpt="@BuildReplyExcerpt(post.Body)"
+                                                        aria-label="@($"{T["Reply to post"]} {post.Number}")">@T["Reply"]</button>
+                                            </Authorized>
+                                        </AuthorizeView>
+                                    }
+                                    @if (post.Number > 1)
+                                    {
+                                        <AuthorizeView Roles="@ForumRoles.Administrator">
+                                            <Authorized>
+                                                @{ var previousPostNumber = topic.Posts.Where(candidate => candidate.Number < post.Number).Select(candidate => candidate.Number).DefaultIfEmpty(1).Max(); }
+                                                <form method="post"
+                                                      action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/delete")"
+                                                      data-enhance
+                                                      data-preserve-topic-position="@($"#post-{previousPostNumber}")"
+                                                      data-confirm-submit="@T["This reply will be permanently removed from the discussion."]"
+                                                      data-confirm-title="@T["Delete this reply?"]"
+                                                      data-confirm-label="@T["Delete reply"]"
+                                                      data-confirm-tone="danger">
+                                                    <AntiforgeryToken />
+                                                    <input type="hidden" name="returnPostNumber" value="@previousPostNumber" />
+                                                    <button class="sf-inline-danger" type="submit">@T["Delete"]</button>
+                                                </form>
+                                            </Authorized>
+                                        </AuthorizeView>
+                                    }
+                                </div>
+                            </header>
+                            @if (post.ReplyToPostNumber is int parentNumber)
+                            {
+                                <a class="mx-5 mt-4 inline-flex rounded-control bg-primary/8 px-3 py-1.5 text-sm font-bold text-primary medium:mx-6" href="@PostPath(parentNumber)">@T["In reply to"] #@parentNumber</a>
+                            }
+                            @if (post.IsHidden)
+                            {
+                                <div class="px-5 py-8 text-center italic text-content-muted medium:px-6">@T["This post was hidden by a moderator."]</div>
+                            }
+                            else
+                            {
+                                <div class="sf-markdown px-5 py-5 medium:px-6">@((MarkupString)Markdown.ToHtml(post.Body))</div>
+                            }
+                            <footer class="flex flex-wrap items-center gap-2 border-t bg-surface-muted/40 px-5 py-3 medium:px-6">
+                                <AuthorizeView Context="postActionsContext">
+                                    <Authorized>
+                                        <div class="flex w-full flex-wrap items-center gap-2">
+                                            @foreach (var reactionName in ReactionNames)
+                                            {
+                                                var reaction = reactions.GetValueOrDefault(post.Id)?.FirstOrDefault(item => item.Reaction == reactionName);
+                                                <form method="post" action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/react")" data-enhance data-preserve-topic-position="@($"#post-{post.Number}")"><AntiforgeryToken/><input type="hidden" name="reaction" value="@reactionName"/><input type="hidden" name="postNumber" value="@post.Number"/><button class="sf-reaction @(reaction?.ReactedByActor == true ? "active" : null)" type="submit">@ReactionSymbol(reactionName) @if(reaction is not null){<span>@reaction.Count</span>}</button></form>
+                                            }
+                                        </div>
+                                        <div class="flex w-full flex-wrap items-center justify-end gap-2">
+                                            <form method="post" action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/bookmark")" data-enhance data-preserve-topic-position="@($"#post-{post.Number}")"><AntiforgeryToken/><input type="hidden" name="postNumber" value="@post.Number"/><button class="sf-post-action" type="submit">@T["Bookmark"]</button></form>
+                                            @if (post.AuthorId != postActionsContext.User.GetMemberId())
+                                            {
+                                                <details class="relative"><summary class="sf-post-action cursor-pointer">@T["Report"]</summary><form method="post" action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/report")" class="sf-popover-form right-0"><AntiforgeryToken/><input type="hidden" name="postNumber" value="@post.Number"/><label>@T["Reason"]<select class="form-select" name="reason"><option value="spam">@T["Spam"]</option><option value="abuse">@T["Abuse"]</option><option value="off-topic">@T["Off topic"]</option><option value="other">@T["Other"]</option></select></label><label>@T["Details"]<textarea class="form-control" name="details" maxlength="1000"></textarea></label><button class="sf-button-primary" type="submit">@T["Send report"]</button></form></details>
+                                            }
+                                            @if (post.AuthorId == postActionsContext.User.GetMemberId() || postActionsContext.User.IsInRole(ForumRoles.Administrator))
+                                            {
+                                                <details class="relative"><summary class="sf-post-action cursor-pointer">@T["Edit"]</summary><form method="post" action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/edit")" class="sf-popover-form right-0 w-80"><AntiforgeryToken/><input type="hidden" name="postNumber" value="@post.Number"/><textarea class="form-control min-h-40" name="body" minlength="5" maxlength="@Post.BodyMaxLength" required>@post.Body</textarea><button class="sf-button-primary" type="submit">@T["Save changes"]</button></form></details>
+                                            }
+                                            @if (post.RevisionCount > 0){<a class="sf-post-action" href="@($"/posts/{post.Id}/history")">@T["Edited"] · @post.RevisionCount</a>}
+                                            @if (postActionsContext.User.IsInRole(ForumRoles.Administrator) && post.Number > 1)
+                                            {
+                                                <form method="post" action="@($"/actions/topics/{topic.Id}/posts/{post.Id}/visibility")" data-enhance data-preserve-topic-position="@($"#post-{post.Number}")"><AntiforgeryToken/><input type="hidden" name="postNumber" value="@post.Number"/><input type="hidden" name="hidden" value="@((!post.IsHidden).ToString().ToLowerInvariant())"/><button class="sf-post-action" type="submit">@(post.IsHidden ? T["Restore"] : T["Hide"])</button></form>
+                                            }
+                                        </div>
+                                    </Authorized>
+                                </AuthorizeView>
+                            </footer>
+                        </article>
+                    }
+                </section>
+                <TopicPaginationNav Topic="topic" />
+
+                @if (replyError is not null)
+                {
+                    <div class="alert alert-danger" role="alert">@replyError</div>
+                }
+
+                <AuthorizeView>
+                    <Authorized Context="authContext">
+                        @if (!topic.IsClosed)
+                        {
+                            <EditForm Model="Reply" method="post" FormName="create-reply" OnValidSubmit="ReplyAsync"
+                                      data-markdown-composer
+                                      data-draft-key="@($"topic-reply:{topic.Id:N}")"
+                                      data-preview-empty="@T["Nothing to preview yet."]"
+                                      data-preview-error="@T["Preview is temporarily unavailable."]"
+                                      data-uploading-label="@T["Uploading"]"
+                                      data-upload-error="@T["The media could not be uploaded."]"
+                                      class="sf-card sf-required-form space-y-4 p-5 medium:p-6">
+                                <DataAnnotationsValidator />
+                                <input type="hidden" name="Reply.ReplyToPostId" value="@Reply.ReplyToPostId" data-reply-to-post-id />
+                                <h2 class="font-display text-xl font-bold">@T["Reply"]</h2>
+                                <div class="sf-composer-tabs" role="tablist" aria-label="@T["Composer mode"]">
+                                    <button type="button" class="sf-composer-tab" data-composer-mode="write" role="tab" aria-selected="true">@T["Write"]</button>
+                                    <button type="button" class="sf-composer-tab" data-composer-mode="preview" role="tab" aria-selected="false">@T["Preview"]</button>
+                                </div>
+                                <div data-composer-write>
+                                    <div class="sf-composer-toolbar" aria-label="@T["Markdown tools"]">
+                                        <button type="button" data-markdown-action="bold" title="@T["Bold"]"><strong>B</strong></button>
+                                        <button type="button" data-markdown-action="inline-code" title="@T["Inline code"]"><code>&lt;/&gt;</code></button>
+                                        <button type="button" data-markdown-action="quote" title="@T["Quote"]">&gt;</button>
+                                        <button type="button" data-markdown-action="code-block" title="@T["Code block"]">{ }</button>
+                                        <label class="sf-attachment-button" title="@T["Attach media"]"><span>@T["Attach"]</span><input type="file" data-attachment-upload accept="image/png,image/jpeg,image/webp,video/mp4,video/webm" hidden /></label>
+                                    </div>
+                                    <p class="form-text" data-attachment-status aria-live="polite">@T["Images up to 10 MB; MP4 or WebM video up to 15 MB."]</p>
+                                    <label for="Reply.Body">@T["Reply text"]</label>
+                                    <InputTextArea @bind-Value="Reply.Body" id="Reply.Body" class="form-control min-h-36" minlength="5" required maxlength="@Post.BodyMaxLength" />
+                                    <p class="form-text mt-1">@T["Markdown is supported, including fenced code blocks."] @T["Drafts are saved on this device."]</p>
+                                    <ValidationMessage For="() => Reply.Body" class="text-danger" />
+                                </div>
+                                <div class="sf-composer-preview sf-markdown" data-composer-preview aria-live="polite" hidden></div>
+                                <button class="sf-submit" type="submit">@T["Post reply"]</button>
+                            </EditForm>
+                        }
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="sf-card p-5 text-sm text-content-muted"><a class="font-bold text-primary" href="@($"/account/login?returnUrl={Uri.EscapeDataString(CurrentPagePath)}")">@T["Sign in"]</a>. @T["Sign in to participate"]</div>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+
+            <aside class="hidden large:block" aria-label="@T["Post navigator"]">
+                <div class="sf-card sticky top-24 p-4" data-post-navigator>
+                    <p class="text-sm font-bold">@T["Posts"]</p>
+                    <p class="mt-1 text-sm text-content-muted"><span data-current-post>@topic.Posts[0].Number</span> @T["of"] @topic.LastPostNumber</p>
+                    <div class="mt-4 flex items-stretch justify-center gap-3">
+                        <input class="sf-post-slider" data-post-slider type="range" min="0" max="@(topic.Posts.Count - 1)" value="0" step="1" orient="vertical" aria-orientation="vertical" aria-label="@T["Jump to post"]" />
+                        <div class="flex flex-col justify-between py-1 text-xs text-content-muted"><span>#@topic.Posts[0].Number</span><span>#@topic.Posts[^1].Number</span></div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+}
+
+@code {
+    private SpaceForum.Application.Discussions.TopicDetail? topic;
+    private TopicVoteState voteState = new(0, null);
+    private string? replyError;
+    private string? voteError;
+    private TopicFeatureState topicFeatures = new(false, null, []);
+    private IReadOnlyDictionary<Guid, IReadOnlyList<ReactionView>> reactions = new Dictionary<Guid, IReadOnlyList<ReactionView>>();
+    private static readonly string[] ReactionNames = ["like", "love", "laugh", "insightful"];
+
+    [Parameter]
+    public string TopicPath { get; set; } = string.Empty;
+
+    [SupplyParameterFromQuery(Name = "page")]
+    public int Page { get; set; } = 1;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm(FormName = "create-reply")]
+    private ReplyInput Reply { get; set; } = default!;
+
+    [SupplyParameterFromForm(FormName = "vote-topic")]
+    private VoteInput Vote { get; set; } = default!;
+
+    private string CanonicalPath => topic is null ? "/" : $"/d/{topic.Number}-{topic.Slug}";
+    private string CurrentPagePath => PagePath(topic?.Page ?? Math.Max(1, Page));
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Reply ??= new();
+        Vote ??= new();
+        var numberPart = TopicPath.Split('-', 2)[0];
+        if (!long.TryParse(numberPart, out var topicNumber) || topicNumber <= 0)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
+
+        var requestedPage = Math.Max(1, Page);
+        topic = await GetDiscussions.DetailAsync(topicNumber, requestedPage, HttpContext.RequestAborted);
+        if (topic is null)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
+
+        if (!string.Equals(TopicPath, $"{topic.Number}-{topic.Slug}", StringComparison.Ordinal) || requestedPage != topic.Page)
+        {
+            NavigationManager.NavigateTo(PagePath(topic.Page), replace: true);
+            return;
+        }
+
+        voteState = await GetDiscussions.VoteAsync(
+            topic.Id,
+            HttpContext.User.GetMemberId(),
+            HttpContext.RequestAborted);
+        topicFeatures = await Features.GetTopicFeaturesAsync(topic.Id, HttpContext.User.GetMemberId(), HttpContext.RequestAborted);
+        reactions = await Features.GetTopicReactionsAsync(topic.Id, HttpContext.User.GetMemberId(), HttpContext.RequestAborted);
+    }
+
+    private async Task ReplyAsync()
+    {
+        if (topic is null)
+        {
+            return;
+        }
+
+        var memberId = HttpContext.User.GetMemberId();
+        if (memberId is null)
+        {
+            replyError = "Sign in before replying.";
+            return;
+        }
+
+        var result = await CreateReplyHandler.HandleAsync(
+            new(memberId.Value, topic.Id, Reply.Body, Reply.ReplyToPostId),
+            HttpContext.RequestAborted);
+        if (result.Status is CreateReplyStatus.Created && result.PostNumber is int number)
+        {
+            NavigationManager.NavigateTo(PostPath(number));
+            return;
+        }
+
+        replyError = result.Error ?? "The reply could not be published.";
+    }
+
+    private async Task VoteAsync()
+    {
+        if (topic is null)
+        {
+            return;
+        }
+
+        var memberId = HttpContext.User.GetMemberId();
+        if (memberId is null)
+        {
+            NavigationManager.NavigateTo($"/account/login?returnUrl={Uri.EscapeDataString(CurrentPagePath)}");
+            return;
+        }
+
+        var result = await VoteTopicHandler.HandleAsync(
+            new(memberId.Value, topic.Id, Vote.Value),
+            HttpContext.RequestAborted);
+        if (!result.Succeeded || result.State is null)
+        {
+            voteError = "The vote could not be saved.";
+            return;
+        }
+
+        voteState = result.State;
+        Vote = new();
+    }
+
+    private static string FormatScore(int score) => score > 0 ? $"+{score}" : score.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    private static string BuildReplyExcerpt(string body)
+    {
+        var compact = string.Join(' ', body.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+        return compact.Length <= 220 ? compact : $"{compact[..217]}...";
+    }
+
+    private static string ReactionSymbol(string reaction) => reaction switch { "love" => "\u2665", "laugh" => "\u263A", "insightful" => "\u2726", _ => "\u2191" };
+
+    private string PagePath(int page) => page <= 1 ? CanonicalPath : $"{CanonicalPath}?page={page}";
+
+    private string PostPath(int postNumber) => $"{PagePath(TopicPagination.PageForPost(postNumber))}#post-{postNumber}";
+
+    private sealed class ReplyInput
+    {
+        [Required, StringLength(Post.BodyMaxLength, MinimumLength = 5)]
+        public string Body { get; set; } = string.Empty;
+
+        public Guid? ReplyToPostId { get; set; }
+    }
+
+    private sealed class VoteInput
+    {
+        public int Value { get; set; }
+    }
+}

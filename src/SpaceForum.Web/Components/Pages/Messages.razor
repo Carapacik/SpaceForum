@@ -1,0 +1,7 @@
+@page "/messages"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using SpaceForum.Application.Messaging
+@using SpaceForum.Web.Security
+@inject MessagingService Messaging
+<PageTitle>@T["Messages"] · SpaceForum</PageTitle><div class="space-y-5"><header class="flex items-end justify-between gap-3"><div><p class="sf-eyebrow">@T["Private conversations"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Messages"]</h1></div><a class="sf-button-primary" href="/messages/new">@T["New message"]</a></header>@if(items.Count==0){<div class="sf-card p-8 text-center text-content-muted">@T["No conversations yet."]</div>}else{<section class="sf-card divide-y overflow-hidden">@foreach(var item in items){<a class="block px-5 py-4 hover:bg-surface-muted" href="@($"/messages/{item.Id}")"><div class="flex justify-between gap-4"><strong>@item.Subject</strong>@if(item.UnreadCount>0){<span class="sf-badge">@item.UnreadCount</span>}</div><p class="mt-1 text-sm text-content-muted">@item.Participants</p></a>}</section>}</div>
+@code {private IReadOnlyList<ConversationView>items=[];[CascadingParameter]private HttpContext HttpContext{get;set;}=default!;protected override async Task OnInitializedAsync(){if(HttpContext.User.GetMemberId() is Guid member)items=await Messaging.ListAsync(member,HttpContext.RequestAborted);}}

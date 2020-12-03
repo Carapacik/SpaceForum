@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>aspnet-SpaceForum_Web-2fbf17d7-0c71-4fb2-9ce9-b50f6fb47423</UserSecretsId>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" />
+    <PackageReference Include="Markdig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceForum.Application\SpaceForum.Application.csproj" />
+    <ProjectReference Include="..\SpaceForum.Infrastructure\SpaceForum.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

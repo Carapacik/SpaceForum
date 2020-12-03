@@ -1,0 +1,62 @@
+@page "/search"
+
+@using SpaceForum.Application.Discussions
+
+@inject GetDiscussionsHandler GetDiscussions
+
+<PageTitle>@T["Search · SpaceForum"]</PageTitle>
+
+<div class="space-y-5">
+    <header>
+        <p class="sf-eyebrow">@T["Search"]</p>
+        <h1 class="mt-1 font-display text-3xl font-bold tracking-[-0.03em]">@T["Search discussions"]</h1>
+        <p class="mt-2 max-w-2xl text-content-muted">@T["Search help"]</p>
+    </header>
+
+    <form class="sf-card p-5 medium:p-6" method="get" action="/search">
+        <label for="search-query">@T["Search query"]</label>
+        <div class="flex flex-col gap-3 medium:flex-row">
+            <input id="search-query" name="q" value="@Query" class="sf-input" type="search" maxlength="120" required placeholder="@T["Search placeholder"]" />
+            <button class="sf-button-primary shrink-0" type="submit">@T["Search"]</button>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrWhiteSpace(Query))
+    {
+        <section aria-live="polite">
+            <h2 class="mb-3 font-display text-xl font-bold">@T["Results for"] “@Query”</h2>
+            @if (results.Count == 0)
+            {
+                <div class="sf-card p-8 text-center text-content-muted">@T["No matching discussions."]</div>
+            }
+            else
+            {
+                <div class="sf-card divide-y overflow-hidden">
+                    @foreach (var topic in results)
+                    {
+                        <a class="block px-5 py-4 transition-colors hover:bg-surface-muted" href="@($"/d/{topic.Number}-{topic.Slug}")">
+                            <h3 class="font-bold">@topic.Title</h3>
+                            <p class="mt-1 text-sm text-content-muted">@topic.CategoryName · @topic.AuthorDisplayName · @topic.ReplyCount replies · score @topic.Score</p>
+                        </a>
+                    }
+                </div>
+            }
+        </section>
+    }
+</div>
+
+@code {
+    private IReadOnlyList<TopicListItem> results = [];
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromQuery(Name = "q")]
+    private string? Query { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Query = Query?.Trim();
+        results = await GetDiscussions.SearchAsync(Query ?? string.Empty, 50, HttpContext.RequestAborted);
+    }
+}

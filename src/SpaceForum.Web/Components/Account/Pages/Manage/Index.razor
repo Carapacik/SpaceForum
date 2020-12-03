@@ -1,0 +1,170 @@
+@page "/account/manage"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using SpaceForum.Application.Members
+@using SpaceForum.Infrastructure.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject GetMemberProfileHandler GetMemberProfile
+@inject UpdateMemberProfileHandler UpdateMemberProfile
+@inject IdentityRedirectManager RedirectManager
+
+<PageTitle>@T["Edit profile"]</PageTitle>
+
+<div class="mb-6">
+    <p class="sf-eyebrow">@T["Account"]</p>
+    <h1 class="mt-2 font-display text-2xl font-bold">@T["Public profile"]</h1>
+    <p class="mt-2 max-w-2xl text-sm text-content-muted">
+        @T["This information appears beside your topics and replies. Your email and security settings remain private."]
+    </p>
+</div>
+
+<StatusMessage />
+
+@if (loadingError is not null)
+{
+    <div class="alert alert-danger" role="alert">@loadingError</div>
+}
+else
+{
+    <form method="post" action="/actions/profile/avatar" enctype="multipart/form-data" class="mb-6 max-w-2xl rounded-control border bg-surface-muted p-4">
+        <AntiforgeryToken />
+        <label for="profile-avatar">@T["Avatar image"]</label>
+        <input id="profile-avatar" class="form-control" type="file" name="avatar" accept="image/png,image/jpeg,image/webp" required />
+        <p class="form-text mt-1">@T["PNG, JPEG, or WebP up to 10 MB."]</p>
+        <button class="sf-button-secondary mt-3" type="submit">@T["Upload avatar"]</button>
+    </form>
+    <EditForm Model="Input" FormName="member-profile" OnValidSubmit="OnValidSubmitAsync" method="post" class="max-w-2xl space-y-5">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+
+        <div>
+            <label for="profile-login">@T["Login"]</label>
+            <input id="profile-login" class="form-control" value="@profile?.Login" disabled />
+            <p class="form-text mt-1">@T["Public URL"]: /members/@profile?.Login</p>
+        </div>
+
+        <div>
+            <label for="Input.DisplayName">@T["Display name"]</label>
+            <InputText @bind-Value="Input.DisplayName" id="Input.DisplayName" class="form-control" autocomplete="name" />
+            <ValidationMessage For="() => Input.DisplayName" class="text-danger" />
+        </div>
+
+        <div>
+            <label for="Input.Biography">@T["Biography"]</label>
+            <InputTextArea @bind-Value="Input.Biography" id="Input.Biography" class="form-control min-h-32" maxlength="500" />
+            <p class="form-text mt-1">@T["A short introduction, up to 500 characters."]</p>
+            <ValidationMessage For="() => Input.Biography" class="text-danger" />
+        </div>
+
+        <div class="grid gap-5 medium:grid-cols-2">
+            <div>
+                <label for="Input.Location">@T["Location"]</label>
+                <InputText @bind-Value="Input.Location" id="Input.Location" class="form-control" autocomplete="address-level2" />
+                <ValidationMessage For="() => Input.Location" class="text-danger" />
+            </div>
+            <div>
+                <label for="Input.Website">@T["Website"]</label>
+                <InputText @bind-Value="Input.Website" id="Input.Website" class="form-control" autocomplete="url" placeholder="https://example.com" />
+                <ValidationMessage For="() => Input.Website" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 border-t pt-5">
+            <button type="submit" class="sf-button-primary">@T["Save profile"]</button>
+            @if (profile is not null)
+            {
+                <a class="sf-button-secondary" href="@($"/members/{profile.Login}")">@T["View public profile"]</a>
+            }
+        </div>
+    </EditForm>
+}
+
+@code {
+    private ApplicationUser? user;
+    private MemberProfileView? profile;
+    private string? loadingError;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Input ??= new();
+        user = await UserManager.GetUserAsync(HttpContext.User);
+        if (user is null)
+        {
+            RedirectManager.RedirectToInvalidUser(UserManager, HttpContext);
+            return;
+        }
+
+        profile = await GetMemberProfile.ByIdAsync(user.Id, HttpContext.RequestAborted);
+        if (profile is null)
+        {
+            loadingError = "Your account does not have a member profile. Please contact an administrator.";
+            return;
+        }
+
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            Input.DisplayName = profile.DisplayName;
+            Input.Biography = profile.Biography;
+            Input.Location = profile.Location;
+            Input.Website = profile.Website;
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        if (user is null || profile is null)
+        {
+            loadingError = "The member profile could not be loaded.";
+            return;
+        }
+
+        var result = await UpdateMemberProfile.HandleAsync(
+            new(
+                user.Id,
+                profile.Id,
+                Input.DisplayName,
+                Input.Biography,
+                Input.Location,
+                Input.Website),
+            HttpContext.RequestAborted);
+
+        if (result.Status is UpdateMemberProfileStatus.Updated)
+        {
+            RedirectManager.RedirectToCurrentPageWithStatus("Your public profile has been updated.", HttpContext);
+            return;
+        }
+
+        loadingError = result.Status switch
+        {
+            UpdateMemberProfileStatus.Forbidden => "You cannot edit this member profile.",
+            UpdateMemberProfileStatus.NotFound => "The member profile no longer exists.",
+            _ => result.Error ?? "The member profile could not be updated.",
+        };
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
+        [Display(Name = "Display name")]
+        public string DisplayName { get; set; } = "";
+
+        [StringLength(500)]
+        public string? Biography { get; set; }
+
+        [StringLength(100)]
+        public string? Location { get; set; }
+
+        [StringLength(200)]
+        [Url]
+        public string? Website { get; set; }
+    }
+}

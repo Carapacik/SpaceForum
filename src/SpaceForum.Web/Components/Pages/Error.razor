@@ -1,0 +1,34 @@
+@page "/error"
+@using System.Diagnostics
+
+<PageTitle>@T["Error"]</PageTitle>
+
+<h1 class="text-danger">@T["Error."]</h1>
+<h2 class="text-danger">@T["An error occurred while processing your request."]</h2>
+
+@if (ShowRequestId)
+{
+    <p>
+        <strong>@T["Request ID:"]</strong> <code>@RequestId</code>
+    </p>
+}
+
+<h3>@T["Development mode"]</h3>
+<p>
+    @T["The Development environment displays more detailed error information."]
+</p>
+<p>
+    <strong>@T["Do not enable the Development environment in deployed applications."]</strong>
+    @T["It can expose sensitive exception information. Enable it only for local debugging and restart the application."]
+</p>
+
+@code{
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

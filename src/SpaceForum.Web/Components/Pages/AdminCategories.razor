@@ -1,0 +1,151 @@
+@page "/admin/categories"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Policy = ForumPolicies.AdministerForum)]
+
+@using System.ComponentModel.DataAnnotations
+@using SpaceForum.Application.Forums
+@using SpaceForum.Application.Members
+@using SpaceForum.Application.Security
+@using SpaceForum.Domain.Forums
+@using SpaceForum.Web.Security
+
+@inject GetCategoriesHandler GetCategories
+@inject GetMemberProfileHandler GetMemberProfile
+@inject CreateCategoryHandler CreateCategoryHandler
+
+<PageTitle>@T["Manage categories"] · SpaceForum</PageTitle>
+
+<div class="space-y-6">
+    <header><p class="sf-eyebrow">@T["Administration"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Categories"]</h1><p class="mt-2 text-content-muted">@T["Create and organise public discussion spaces."]</p></header>
+
+    @if (message is not null)
+    {
+        <div class="alert @(isError ? "alert-danger" : "")" role="status">@message</div>
+    }
+
+    <div class="grid gap-6 large:grid-cols-[minmax(0,1fr)_22rem]">
+        <section class="sf-card overflow-hidden" aria-labelledby="existing-categories-heading">
+            <h2 id="existing-categories-heading" class="border-b px-5 py-4 font-display text-xl font-bold">@T["Existing categories"]</h2>
+            <div class="divide-y">
+                @foreach (var category in categories)
+                {
+                    <div class="flex items-start justify-between gap-4 px-5 py-4 @(category.ParentId is not null ? "pl-10" : "")">
+                        <div><h3 class="font-bold">@category.Name</h3><p class="mt-1 text-sm text-content-muted">/@category.Slug · @category.Format · position @category.Position</p></div>
+                        <div class="flex shrink-0 items-center gap-2">
+                            <a class="text-sm font-bold text-primary hover:text-primary-hover" href="@($"/categories/{category.Slug}")">@T["View"]</a>
+                            @if (canDeleteCategories)
+                            {
+                                <form method="post"
+                                      action="@($"/actions/categories/{category.Id}/delete")"
+                                      data-confirm-submit="@T["Only an empty category without child categories or topics can be deleted."]"
+                                      data-confirm-title="@T["Delete {0}?", category.Name]"
+                                      data-confirm-label="@T["Delete category"]"
+                                      data-confirm-tone="danger">
+                                    <AntiforgeryToken />
+                                    <button type="submit" class="sf-inline-danger">@T["Delete"]</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <EditForm Model="Input" method="post" FormName="admin-create-category" OnValidSubmit="CreateAsync" class="sf-card h-fit space-y-4 p-5">
+            <DataAnnotationsValidator />
+            <h2 class="font-display text-xl font-bold">@T["New category"]</h2>
+            <ValidationSummary class="text-danger" />
+            <div><label for="Input.Name">@T["Name"]</label><InputText @bind-Value="Input.Name" id="Input.Name" class="form-control" /><ValidationMessage For="() => Input.Name" class="text-danger" /></div>
+            <div><label for="Input.Slug">@T["Slug"]</label><InputText @bind-Value="Input.Slug" id="Input.Slug" class="form-control" placeholder="category-slug" /><ValidationMessage For="() => Input.Slug" class="text-danger" /></div>
+            <div><label for="Input.Description">@T["Description"]</label><InputTextArea @bind-Value="Input.Description" id="Input.Description" class="form-control min-h-28" /><ValidationMessage For="() => Input.Description" class="text-danger" /></div>
+            <div><label for="Input.Format">@T["Format"]</label><InputSelect @bind-Value="Input.Format" id="Input.Format" class="form-select"><option value="@CategoryFormat.Discussion">@T["Discussion"]</option><option value="@CategoryFormat.QuestionAndAnswer">@T["Questions and answers"]</option><option value="@CategoryFormat.Announcement">@T["Announcement"]</option></InputSelect></div>
+            <div><label for="Input.ParentId">@T["Parent"]</label><InputSelect @bind-Value="Input.ParentId" id="Input.ParentId" class="form-select"><option value="">@T["Top level"]</option>@foreach (var category in categories.Where(item => item.ParentId is null)){<option value="@category.Id">@category.Name</option>}</InputSelect></div>
+            <div><label for="Input.Position">@T["Position"]</label><InputNumber @bind-Value="Input.Position" id="Input.Position" class="form-control" /><ValidationMessage For="() => Input.Position" class="text-danger" /></div>
+            <button class="sf-button-primary w-full" type="submit">@T["Create category"]</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private IReadOnlyList<CategoryView> categories = [];
+    private string? message;
+    private bool isError;
+    private bool canDeleteCategories;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "delete")]
+    public string? DeleteResult { get; set; }
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Input ??= new();
+        categories = await GetCategories.ListAsync(HttpContext.RequestAborted);
+        var memberId = HttpContext.User.GetMemberId();
+        if (memberId is Guid id)
+        {
+            var member = await GetMemberProfile.ByIdAsync(id, HttpContext.RequestAborted);
+            canDeleteCategories = string.Equals(member?.Login, "admin", StringComparison.Ordinal);
+        }
+
+        (message, isError) = DeleteResult switch
+        {
+            "deleted" => (T["Category deleted."].Value, false),
+            "not-empty" => (T["The category still contains topics or child categories."].Value, true),
+            "not-found" => (T["The category no longer exists."].Value, true),
+            _ => (message, isError),
+        };
+    }
+
+    private async Task CreateAsync()
+    {
+        var memberId = HttpContext.User.GetMemberId();
+        if (memberId is null)
+        {
+            message = T["The administrator identity could not be resolved."];
+            isError = true;
+            return;
+        }
+
+        var result = await CreateCategoryHandler.HandleAsync(
+            new(
+                memberId.Value,
+                Input.Name,
+                Input.Slug,
+                Input.Description,
+                Input.Format,
+                Guid.TryParse(Input.ParentId, out var parentId) ? parentId : null,
+                Input.Position),
+            HttpContext.RequestAborted);
+        isError = result.Status is not CreateCategoryStatus.Created;
+        message = isError ? result.Error ?? T["The category could not be created."] : T["Category created."];
+        if (!isError)
+        {
+            Input = new();
+            categories = await GetCategories.ListAsync(HttpContext.RequestAborted);
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required, StringLength(ForumCategory.NameMaxLength, MinimumLength = 2)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required, RegularExpression("^[a-z0-9](?:[a-z0-9-]{0,58}[a-z0-9])?$"), StringLength(ForumCategory.SlugMaxLength, MinimumLength = 2)]
+        public string Slug { get; set; } = string.Empty;
+
+        [Required, StringLength(ForumCategory.DescriptionMaxLength, MinimumLength = 2)]
+        public string Description { get; set; } = string.Empty;
+
+        public CategoryFormat Format { get; set; }
+
+        public string ParentId { get; set; } = string.Empty;
+
+        [Range(0, int.MaxValue)]
+        public int Position { get; set; }
+    }
+}

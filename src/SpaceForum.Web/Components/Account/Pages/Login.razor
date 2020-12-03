@@ -1,0 +1,166 @@
+@page "/account/login"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using SpaceForum.Application.Members
+@using SpaceForum.Application.Security
+@using SpaceForum.Infrastructure.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject GetMemberProfileHandler GetMemberProfile
+@inject ILogger<Login> Logger
+@inject IdentityRedirectManager RedirectManager
+@inject ISecurityAuditWriter SecurityAudit
+
+<PageTitle>@T["Sign in"] · SpaceForum</PageTitle>
+
+<div class="sf-auth-shell">
+    <header class="mb-6">
+        <p class="sf-eyebrow">@T["Welcome back"]</p>
+        <h1 class="mt-2 font-display text-3xl font-bold">@T["Sign in"]</h1>
+        <p class="mt-2 text-content-muted">@T["Login help"]</p>
+    </header>
+
+    <StatusMessage Message="@errorMessage" />
+    <EditForm EditContext="editContext" method="post" OnSubmit="LoginUser" FormName="login" class="sf-auth-card sf-required-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+
+        <div>
+            <label for="Input.Identifier">@T["Email or login"]</label>
+            <InputText @bind-Value="Input.Identifier" id="Input.Identifier" class="form-control" autocomplete="username webauthn" required aria-required="true" placeholder="@T["Login placeholder"]" />
+            <ValidationMessage For="() => Input.Identifier" class="text-danger" />
+        </div>
+        <div>
+            <label for="Input.Password">@T["Password"]</label>
+            <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="current-password" required aria-required="true" placeholder="@T["Password placeholder"]" />
+            <ValidationMessage For="() => Input.Password" class="text-danger" />
+        </div>
+        <label class="form-check mb-2 font-normal">
+            <InputCheckbox @bind-Value="Input.RememberMe" class="form-check-input" />
+            <span>@T["Remember me"]</span>
+        </label>
+
+        <button type="submit" class="sf-submit w-full">@T["Sign in"]</button>
+
+        <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-content-muted"><span class="h-px flex-1 bg-line"></span>@T["or"]<span class="h-px flex-1 bg-line"></span></div>
+        <PasskeySubmit Operation="PasskeyOperation.Request" Name="Input.Passkey" EmailName="Input.Identifier" class="sf-button-secondary w-full">@T["Sign in with a passkey"]</PasskeySubmit>
+
+        <div class="sf-auth-links">
+            <a href="/account/forgotpassword">@T["Forgot your password?"]</a>
+            <a href="/account/register">@T["Create a new account"]</a>
+            <a href="/account/resendemailconfirmation">@T["Resend email confirmation"]</a>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private string? errorMessage;
+    private EditContext editContext = default!;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = default!;
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Input ??= new();
+        editContext = new EditContext(Input);
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        }
+    }
+
+    public async Task LoginUser()
+    {
+        if (!string.IsNullOrEmpty(Input.Passkey?.Error))
+        {
+            errorMessage = $"Error: {Input.Passkey.Error}";
+            return;
+        }
+
+        SignInResult result;
+        ApplicationUser? user = null;
+        if (!string.IsNullOrEmpty(Input.Passkey?.CredentialJson))
+        {
+            result = await SignInManager.PasskeySignInAsync(Input.Passkey.CredentialJson);
+        }
+        else
+        {
+            if (!editContext.Validate())
+            {
+                return;
+            }
+
+            user = await FindUserAsync(Input.Identifier);
+            result = user is null
+                ? SignInResult.Failed
+                : await SignInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+        }
+
+        if (result.Succeeded)
+        {
+            await SecurityAudit.WriteAsync(
+                new(SecurityEventTypes.LoginSucceeded, user?.Id, user?.Id.ToString(), Succeeded: true),
+                HttpContext.RequestAborted);
+            Logger.LogInformation("User logged in.");
+            RedirectManager.RedirectTo(ReturnUrl);
+        }
+        else if (result.RequiresTwoFactor)
+        {
+            RedirectManager.RedirectTo(
+                "account/loginwith2fa",
+                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = Input.RememberMe });
+        }
+        else if (result.IsLockedOut)
+        {
+            await SecurityAudit.WriteAsync(
+                new(SecurityEventTypes.AccountLockedOut, null, null, Succeeded: false),
+                HttpContext.RequestAborted);
+            Logger.LogWarning("User account locked out.");
+            RedirectManager.RedirectTo("account/lockout");
+        }
+        else
+        {
+            await SecurityAudit.WriteAsync(
+                new(SecurityEventTypes.LoginFailed, null, null, Succeeded: false),
+                HttpContext.RequestAborted);
+            errorMessage = $"{T["Error"]}: {T["Invalid login or password."]}";
+        }
+    }
+
+    private async Task<ApplicationUser?> FindUserAsync(string identifier)
+    {
+        var normalized = identifier.Trim();
+        if (normalized.Contains('@', StringComparison.Ordinal))
+        {
+            return await UserManager.FindByEmailAsync(normalized);
+        }
+
+        var profile = await GetMemberProfile.ByLoginAsync(normalized, HttpContext.RequestAborted);
+        return profile is null ? null : await UserManager.FindByIdAsync(profile.Id.ToString());
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [Display(Name = "Email or login")]
+        public string Identifier { get; set; } = "";
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        public bool RememberMe { get; set; }
+
+        public PasskeyInputModel? Passkey { get; set; }
+    }
+}

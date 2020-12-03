@@ -1,0 +1,83 @@
+@page "/members/{Login}"
+
+@using SpaceForum.Application.Members
+
+@inject GetMemberProfileHandler GetMemberProfile
+
+<PageTitle>@(profile is null ? "Member not found" : $"{profile.DisplayName} · SpaceForum")</PageTitle>
+
+@if (profile is null)
+{
+    <section class="sf-card mx-auto max-w-2xl p-6 text-center medium:p-10">
+        <p class="sf-eyebrow">404</p>
+        <h1 class="mt-2 font-display text-2xl font-bold">@T["Member not found"]</h1>
+        <p class="mt-3 text-content-muted">@T["This profile may have been renamed or removed."]</p>
+        <a class="sf-button-primary mt-6" href="/">@T["Return home"]</a>
+    </section>
+}
+else
+{
+    <article class="sf-card overflow-hidden">
+        <div class="h-28 bg-linear-to-br from-primary/25 via-accent/15 to-transparent medium:h-36"></div>
+        <div class="px-5 pb-6 medium:px-8 medium:pb-8">
+            <div class="-mt-10 flex flex-col gap-4 medium:-mt-12 medium:flex-row medium:items-end">
+                <img class="size-20 shrink-0 rounded-full border-4 border-surface bg-primary object-cover medium:size-24" src="@($"/media/avatars/{profile.Login}")" alt="@($"{profile.DisplayName} {T["avatar"]}")" />
+                <div class="min-w-0 pb-1">
+                    <h1 class="truncate font-display text-2xl font-bold medium:text-3xl">@profile.DisplayName</h1>
+                    <p class="text-content-muted">@@@profile.Login</p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(profile.Biography))
+            {
+                <p class="mt-6 max-w-3xl whitespace-pre-line text-content">@profile.Biography</p>
+            }
+
+            <dl class="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-content-muted">
+                <div>
+                    <dt class="sr-only">@T["Joined"]</dt>
+                    <dd>@T["Joined"] <time datetime="@profile.CreatedAt.ToString("O")" data-local-time="month-year">@profile.CreatedAt.ToString("MMMM yyyy")</time></dd>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(profile.Location))
+                {
+                    <div>
+                        <dt class="sr-only">@T["Location"]</dt>
+                        <dd>@profile.Location</dd>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(profile.Website))
+                {
+                    <div>
+                        <dt class="sr-only">@T["Website"]</dt>
+                        <dd><a class="font-semibold text-primary hover:underline" href="@profile.Website" rel="nofollow ugc noopener" target="_blank">@T["Website"]</a></dd>
+                    </div>
+                }
+            </dl>
+        </div>
+    </article>
+}
+
+@code {
+    private MemberProfileView? profile;
+
+    [Parameter]
+    public string Login { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        profile = await GetMemberProfile.ByLoginAsync(Login, HttpContext.RequestAborted);
+        if (profile is null)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+    }
+
+    private static string GetInitials(string displayName)
+    {
+        var words = displayName.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return string.Concat(words.Take(2).Select(word => char.ToUpperInvariant(word[0])));
+    }
+}

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Search discussions" xml:space="preserve"><value>Поиск обсуждений</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Войти</value></data>
+  <data name="Join" xml:space="preserve"><value>Регистрация</value></data>
+  <data name="Account" xml:space="preserve"><value>Аккаунт</value></data>
+  <data name="Home" xml:space="preserve"><value>Главная</value></data>
+  <data name="Categories" xml:space="preserve"><value>Категории</value></data>
+  <data name="Search" xml:space="preserve"><value>Поиск</value></data>
+  <data name="Browse" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Admin" xml:space="preserve"><value>Админ</value></data>
+  <data name="Welcome to SpaceForum" xml:space="preserve"><value>Добро пожаловать в SpaceForum</value></data>
+  <data name="Good conversations deserve room to breathe." xml:space="preserve"><value>Хорошим разговорам нужно пространство.</value></data>
+  <data name="Home description" xml:space="preserve"><value>Программирование, компьютерные игры, практические ответы и знания сообщества, которые не теряют ценность.</value></data>
+  <data name="Start a topic" xml:space="preserve"><value>Создать тему</value></data>
+  <data name="Create an account" xml:space="preserve"><value>Создать аккаунт</value></data>
+  <data name="Explore categories" xml:space="preserve"><value>Посмотреть категории</value></data>
+  <data name="Discussions" xml:space="preserve"><value>Обсуждения</value></data>
+  <data name="Latest" xml:space="preserve"><value>Активные</value></data>
+  <data name="Newest" xml:space="preserve"><value>Новые</value></data>
+  <data name="Oldest" xml:space="preserve"><value>Старые</value></data>
+  <data name="Top" xml:space="preserve"><value>По ответам</value></data>
+  <data name="Highest rated" xml:space="preserve"><value>Лучший рейтинг</value></data>
+  <data name="Lowest rated" xml:space="preserve"><value>Худший рейтинг</value></data>
+  <data name="topics" xml:space="preserve"><value>темы</value></data>
+  <data name="replies" xml:space="preserve"><value>ответов</value></data>
+  <data name="Search query" xml:space="preserve"><value>Поисковый запрос</value></data>
+  <data name="Search help" xml:space="preserve"><value>Поиск по заголовкам и тексту сообщений через полнотекстовые индексы PostgreSQL.</value></data>
+  <data name="Search placeholder" xml:space="preserve"><value>Например: архитектура .NET или multiplayer</value></data>
+  <data name="Results for" xml:space="preserve"><value>Результаты для</value></data>
+  <data name="No matching discussions." xml:space="preserve"><value>Подходящих обсуждений не найдено.</value></data>
+  <data name="Topic not found" xml:space="preserve"><value>Тема не найдена</value></data>
+  <data name="Posts" xml:space="preserve"><value>Сообщения</value></data>
+  <data name="of" xml:space="preserve"><value>из</value></data>
+  <data name="Reply" xml:space="preserve"><value>Ответ</value></data>
+  <data name="Reply text" xml:space="preserve"><value>Текст ответа</value></data>
+  <data name="Post reply" xml:space="preserve"><value>Опубликовать ответ</value></data>
+  <data name="Sign in to participate" xml:space="preserve"><value>Войдите, чтобы голосовать или участвовать в обсуждении.</value></data>
+  <data name="Email or login" xml:space="preserve"><value>Email или логин</value></data>
+  <data name="Password" xml:space="preserve"><value>Пароль</value></data>
+  <data name="Remember me" xml:space="preserve"><value>Запомнить на этом устройстве</value></data>
+  <data name="Sign in with a passkey" xml:space="preserve"><value>Войти с ключом доступа</value></data>
+  <data name="Forgot your password?" xml:space="preserve"><value>Забыли пароль?</value></data>
+  <data name="Create a new account" xml:space="preserve"><value>Создать новый аккаунт</value></data>
+  <data name="Resend email confirmation" xml:space="preserve"><value>Повторно отправить подтверждение email</value></data>
+  <data name="Welcome back" xml:space="preserve"><value>С возвращением</value></data>
+  <data name="Login help" xml:space="preserve"><value>Используйте публичный логин в нижнем регистре или email аккаунта.</value></data>
+  <data name="Login" xml:space="preserve"><value>Логин</value></data>
+  <data name="Login help registration" xml:space="preserve"><value>Используется в адресе профиля: /members/login. Разрешены только строчные английские буквы и цифры.</value></data>
+  <data name="Display name" xml:space="preserve"><value>Отображаемое имя</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Confirm password" xml:space="preserve"><value>Подтвердите пароль</value></data>
+  <data name="Register" xml:space="preserve"><value>Зарегистрироваться</value></data>
+  <data name="Join SpaceForum" xml:space="preserve"><value>Присоединиться к SpaceForum</value></data>
+  <data name="Registration help" xml:space="preserve"><value>Логин определяет публичный профиль, а email остаётся приватным.</value></data>
+  <data name="Already registered" xml:space="preserve"><value>Уже есть аккаунт? Войти</value></data>
+  <data name="Account recovery" xml:space="preserve"><value>Восстановление аккаунта</value></data>
+  <data name="Recovery help" xml:space="preserve"><value>Мы отправим одноразовую ссылку для сброса на ваш email.</value></data>
+  <data name="Send reset link" xml:space="preserve"><value>Отправить ссылку</value></data>
+  <data name="Return to sign in" xml:space="preserve"><value>Вернуться ко входу</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Задайте новый пароль</value></data>
+  <data name="Password requirements" xml:space="preserve"><value>Не менее 12 символов: заглавная и строчная буквы, цифра и специальный символ.</value></data>
+  <data name="New password" xml:space="preserve"><value>Новый пароль</value></data>
+  <data name="Confirm new password" xml:space="preserve"><value>Подтвердите новый пароль</value></data>
+  <data name="Save new password" xml:space="preserve"><value>Сохранить новый пароль</value></data>
+  <data name="Programming and games" xml:space="preserve"><value>Программирование, компьютерные игры и знания сообщества, которые остаются полезными.</value></data>
+  <data name="No categories yet" xml:space="preserve"><value>Категорий пока нет</value></data>
+  <data name="No categories help" xml:space="preserve"><value>Администратор может создать первую категорию.</value></data>
+  <data name="New topic" xml:space="preserve"><value>Новая тема</value></data>
+  <data name="No topics" xml:space="preserve"><value>В этой категории пока нет тем.</value></data>
+  <data name="Create" xml:space="preserve"><value>Создание</value></data>
+  <data name="Category" xml:space="preserve"><value>Категория</value></data>
+  <data name="Title" xml:space="preserve"><value>Заголовок</value></data>
+  <data name="Message" xml:space="preserve"><value>Сообщение</value></data>
+  <data name="Publish topic" xml:space="preserve"><value>Опубликовать тему</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Check your email" xml:space="preserve"><value>Проверьте почту</value></data>
+  <data name="Check email reset" xml:space="preserve"><value>Откройте одноразовую ссылку для сброса пароля в письме.</value></data>
+  <data name="Password changed" xml:space="preserve"><value>Пароль изменён</value></data>
+  <data name="Password changed help" xml:space="preserve"><value>Новый пароль сохранён.</value></data>
+  <data name="This topic is closed. New replies are disabled." xml:space="preserve"><value>Тема закрыта. Новые ответы отключены.</value></data>
+  <data name="Reopen topic" xml:space="preserve"><value>Открыть тему</value></data>
+  <data name="Close topic" xml:space="preserve"><value>Закрыть тему</value></data>
+  <data name="Delete topic" xml:space="preserve"><value>Удалить тему</value></data>
+  <data name="Delete" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Delete this topic and all its replies?" xml:space="preserve"><value>Удалить эту тему и все ответы?</value></data>
+  <data name="Delete this reply?" xml:space="preserve"><value>Удалить этот ответ?</value></data>
+  <data name="Account security" xml:space="preserve"><value>Безопасность аккаунта</value></data>
+  <data name="Enter the email address used for your account." xml:space="preserve"><value>Введите адрес электронной почты вашего аккаунта.</value></data>
+  <data name="Resend confirmation" xml:space="preserve"><value>Отправить подтверждение</value></data>
+  <data name="Verification email sent. Please check your email." xml:space="preserve"><value>Письмо отправлено. Проверьте электронную почту.</value></data>
+  <data name="Post permalink" xml:space="preserve"><value>Постоянная ссылка на сообщение</value></data>
+  <data name="Copy link to post" xml:space="preserve"><value>Скопировать ссылку на сообщение</value></data>
+  <data name="Confirmation" xml:space="preserve"><value>Подтверждение</value></data>
+  <data name="Close this topic?" xml:space="preserve"><value>Закрыть эту тему?</value></data>
+  <data name="Reopen this topic?" xml:space="preserve"><value>Снова открыть эту тему?</value></data>
+  <data name="New replies will be disabled until the topic is reopened." xml:space="preserve"><value>Новые ответы будут отключены, пока тема не будет снова открыта.</value></data>
+  <data name="Members will be able to publish replies again." xml:space="preserve"><value>Пользователи снова смогут публиковать ответы.</value></data>
+  <data name="Delete this topic?" xml:space="preserve"><value>Удалить эту тему?</value></data>
+  <data name="The topic, every reply, and all votes will be permanently deleted." xml:space="preserve"><value>Тема, все ответы и голоса будут удалены без возможности восстановления.</value></data>
+  <data name="This reply will be permanently removed from the discussion." xml:space="preserve"><value>Ответ будет навсегда удалён из обсуждения.</value></data>
+  <data name="Delete reply" xml:space="preserve"><value>Удалить ответ</value></data>
+  <data name="Markdown is supported, including fenced code blocks." xml:space="preserve"><value>Поддерживается Markdown, включая блоки кода с тройными обратными кавычками.</value></data>
+  <data name="Reply to post" xml:space="preserve"><value>Ответить на сообщение</value></data>
+  <data name="wrote" xml:space="preserve"><value>написал(а)</value></data>
+  <data name="Composer mode" xml:space="preserve"><value>Режим редактора</value></data>
+  <data name="Write" xml:space="preserve"><value>Написать</value></data>
+  <data name="Preview" xml:space="preserve"><value>Предпросмотр</value></data>
+  <data name="Markdown tools" xml:space="preserve"><value>Инструменты Markdown</value></data>
+  <data name="Bold" xml:space="preserve"><value>Жирный текст</value></data>
+  <data name="Inline code" xml:space="preserve"><value>Код в строке</value></data>
+  <data name="Quote" xml:space="preserve"><value>Цитата</value></data>
+  <data name="Code block" xml:space="preserve"><value>Блок кода</value></data>
+  <data name="Drafts are saved on this device." xml:space="preserve"><value>Черновик сохраняется на этом устройстве.</value></data>
+  <data name="Nothing to preview yet." xml:space="preserve"><value>Пока нечего показывать.</value></data>
+  <data name="Preview is temporarily unavailable." xml:space="preserve"><value>Предпросмотр временно недоступен.</value></data>
+  <data name="Change language" xml:space="preserve"><value>Сменить язык</value></data>
+  <data name="Member not found" xml:space="preserve"><value>Пользователь не найден</value></data>
+  <data name="This profile may have been renamed or removed." xml:space="preserve"><value>Возможно, профиль был переименован или удалён.</value></data>
+  <data name="Return home" xml:space="preserve"><value>Вернуться на главную</value></data>
+  <data name="Joined" xml:space="preserve"><value>На форуме с</value></data>
+  <data name="Location" xml:space="preserve"><value>Местоположение</value></data>
+  <data name="Website" xml:space="preserve"><value>Сайт</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Уведомления</value></data>
+  <data name="Activity" xml:space="preserve"><value>Активность</value></data>
+  <data name="Mark all as read" xml:space="preserve"><value>Отметить всё прочитанным</value></data>
+  <data name="No notifications yet." xml:space="preserve"><value>Уведомлений пока нет.</value></data>
+  <data name="Unread" xml:space="preserve"><value>Не прочитано</value></data>
+  <data name="mentioned you" xml:space="preserve"><value>упомянул(а) вас</value></data>
+  <data name="replied to your post" xml:space="preserve"><value>ответил(а) на ваше сообщение</value></data>
+  <data name="posted in a followed topic" xml:space="preserve"><value>написал(а) в отслеживаемой теме</value></data>
+  <data name="Bookmarks" xml:space="preserve"><value>Закладки</value></data>
+  <data name="Library" xml:space="preserve"><value>Библиотека</value></data>
+  <data name="No bookmarked posts yet." xml:space="preserve"><value>В закладках пока ничего нет.</value></data>
+  <data name="Moderation queue" xml:space="preserve"><value>Очередь модерации</value></data>
+  <data name="Administration" xml:space="preserve"><value>Администрирование</value></data>
+  <data name="Reports" xml:space="preserve"><value>Жалобы</value></data>
+  <data name="No reports." xml:space="preserve"><value>Жалоб нет.</value></data>
+  <data name="Resolve" xml:space="preserve"><value>Решено</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>Отклонить</value></data>
+  <data name="Edit history" xml:space="preserve"><value>История правок</value></data>
+  <data name="Post history" xml:space="preserve"><value>История сообщения</value></data>
+  <data name="This post has no edits." xml:space="preserve"><value>У этого сообщения нет правок.</value></data>
+  <data name="Before" xml:space="preserve"><value>До</value></data>
+  <data name="After" xml:space="preserve"><value>После</value></data>
+  <data name="Pinned" xml:space="preserve"><value>Закреплено</value></data>
+  <data name="Following" xml:space="preserve"><value>Отслеживается</value></data>
+  <data name="Follow" xml:space="preserve"><value>Отслеживать</value></data>
+  <data name="Ignoring" xml:space="preserve"><value>Игнорируется</value></data>
+  <data name="Ignore" xml:space="preserve"><value>Игнорировать</value></data>
+  <data name="In reply to" xml:space="preserve"><value>В ответ на</value></data>
+  <data name="This post was hidden by a moderator." xml:space="preserve"><value>Сообщение скрыто модератором.</value></data>
+  <data name="Bookmark" xml:space="preserve"><value>В закладки</value></data>
+  <data name="Report" xml:space="preserve"><value>Пожаловаться</value></data>
+  <data name="Reason" xml:space="preserve"><value>Причина</value></data>
+  <data name="Spam" xml:space="preserve"><value>Спам</value></data>
+  <data name="Abuse" xml:space="preserve"><value>Оскорбление</value></data>
+  <data name="Off topic" xml:space="preserve"><value>Не по теме</value></data>
+  <data name="Other" xml:space="preserve"><value>Другое</value></data>
+  <data name="Details" xml:space="preserve"><value>Подробности</value></data>
+  <data name="Send report" xml:space="preserve"><value>Отправить жалобу</value></data>
+  <data name="Edit" xml:space="preserve"><value>Редактировать</value></data>
+  <data name="Save changes" xml:space="preserve"><value>Сохранить изменения</value></data>
+  <data name="Edited" xml:space="preserve"><value>Изменено</value></data>
+  <data name="Restore" xml:space="preserve"><value>Восстановить</value></data>
+  <data name="Hide" xml:space="preserve"><value>Скрыть</value></data>
+  <data name="Manage topic" xml:space="preserve"><value>Управление темой</value></data><data name="Pin this topic" xml:space="preserve"><value>Закрепить тему</value></data><data name="Tags" xml:space="preserve"><value>Теги</value></data><data name="The topic could not be updated." xml:space="preserve"><value>Не удалось обновить тему.</value></data>
+  <data name="The tag will be removed from all topics." xml:space="preserve"><value>Тег будет удалён из всех тем.</value></data><data name="Delete tag?" xml:space="preserve"><value>Удалить тег?</value></data><data name="New tag" xml:space="preserve"><value>Новый тег</value></data><data name="Name" xml:space="preserve"><value>Название</value></data><data name="Slug" xml:space="preserve"><value>Адрес</value></data><data name="Description" xml:space="preserve"><value>Описание</value></data><data name="Color" xml:space="preserve"><value>Цвет</value></data><data name="Position" xml:space="preserve"><value>Позиция</value></data><data name="Create tag" xml:space="preserve"><value>Создать тег</value></data>
+  <data name="Users" xml:space="preserve"><value>Пользователи</value></data><data name="Suspended" xml:space="preserve"><value>Заблокирован</value></data><data name="Change group" xml:space="preserve"><value>Изменить группу</value></data><data name="Restore access for this user." xml:space="preserve"><value>Восстановить доступ пользователя.</value></data><data name="Block sign-in and posting for this user." xml:space="preserve"><value>Запретить пользователю вход и публикацию.</value></data><data name="Unsuspend user?" xml:space="preserve"><value>Разблокировать пользователя?</value></data><data name="Suspend user?" xml:space="preserve"><value>Заблокировать пользователя?</value></data><data name="Unsuspend" xml:space="preserve"><value>Разблокировать</value></data><data name="Suspend" xml:space="preserve"><value>Заблокировать</value></data>
+  <data name="Groups and permissions" xml:space="preserve"><value>Группы и разрешения</value></data><data name="Save permissions" xml:space="preserve"><value>Сохранить разрешения</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Панель управления</value></data><data name="Members" xml:space="preserve"><value>Участники</value></data><data name="Open reports" xml:space="preserve"><value>Открытые жалобы</value></data><data name="Private messages" xml:space="preserve"><value>Личные сообщения</value></data><data name="Settings" xml:space="preserve"><value>Настройки</value></data><data name="Audit log" xml:space="preserve"><value>Журнал аудита</value></data>
+  <data name="Time" xml:space="preserve"><value>Время</value></data><data name="Event" xml:space="preserve"><value>Событие</value></data><data name="Actor" xml:space="preserve"><value>Исполнитель</value></data><data name="Subject" xml:space="preserve"><value>Объект</value></data><data name="Result" xml:space="preserve"><value>Результат</value></data><data name="Success" xml:space="preserve"><value>Успешно</value></data><data name="Failed" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Настройки сохранены.</value></data><data name="Forum name" xml:space="preserve"><value>Название форума</value></data><data name="Welcome banner" xml:space="preserve"><value>Приветственный баннер</value></data><data name="Accent color" xml:space="preserve"><value>Акцентный цвет</value></data><data name="Maintenance mode" xml:space="preserve"><value>Режим обслуживания</value></data><data name="Save settings" xml:space="preserve"><value>Сохранить настройки</value></data>
+  <data name="New posts are available." xml:space="preserve"><value>Появились новые сообщения.</value></data><data name="Show new posts" xml:space="preserve"><value>Показать новые сообщения</value></data>
+  <data name="Messages" xml:space="preserve"><value>Сообщения</value></data><data name="Private conversations" xml:space="preserve"><value>Личные диалоги</value></data><data name="New message" xml:space="preserve"><value>Новое сообщение</value></data><data name="No conversations yet." xml:space="preserve"><value>Диалогов пока нет.</value></data><data name="Recipient login" xml:space="preserve"><value>Логин получателя</value></data><data name="Send message" xml:space="preserve"><value>Отправить сообщение</value></data><data name="Conversation not found." xml:space="preserve"><value>Диалог не найден.</value></data>
+  <data name="Attach file" xml:space="preserve"><value>Прикрепить файл</value></data><data name="Attach" xml:space="preserve"><value>Файл</value></data><data name="avatar" xml:space="preserve"><value>аватар</value></data>
+  <data name="Topic count" xml:space="preserve"><value>Темы</value></data>
+  <data name="Attach media" xml:space="preserve"><value>Прикрепить медиа</value></data>
+  <data name="Images up to 10 MB; MP4 or WebM video up to 15 MB." xml:space="preserve"><value>Изображения до 10 МБ; видео MP4 или WebM до 15 МБ.</value></data>
+  <data name="Avatar image" xml:space="preserve"><value>Изображение профиля</value></data>
+  <data name="PNG, JPEG, or WebP up to 10 MB." xml:space="preserve"><value>PNG, JPEG или WebP размером до 10 МБ.</value></data>
+  <data name="Upload avatar" xml:space="preserve"><value>Загрузить изображение</value></data>
+  <data name="Account settings" xml:space="preserve"><value>Настройки аккаунта</value></data>
+  <data name="Manage your public profile, security, sign-in methods, and personal data." xml:space="preserve"><value>Управляйте публичным профилем, безопасностью, способами входа и персональными данными.</value></data>
+  <data name="Profile" xml:space="preserve"><value>Профиль</value></data>
+  <data name="External logins" xml:space="preserve"><value>Внешние способы входа</value></data>
+  <data name="Two-factor authentication" xml:space="preserve"><value>Двухфакторная аутентификация</value></data>
+  <data name="Passkeys" xml:space="preserve"><value>Ключи доступа</value></data>
+  <data name="Personal data" xml:space="preserve"><value>Персональные данные</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Выйти</value></data>
+  <data name="Session" xml:space="preserve"><value>Сеанс</value></data>
+  <data name="Sign out of SpaceForum?" xml:space="preserve"><value>Выйти из SpaceForum?</value></data>
+  <data name="You will need to sign in again to post, vote, or manage your account." xml:space="preserve"><value>Чтобы публиковать сообщения, голосовать или управлять аккаунтом, потребуется снова войти.</value></data>
+  <data name="Create and organise public discussion spaces." xml:space="preserve"><value>Создавайте и упорядочивайте публичные разделы форума.</value></data>
+  <data name="Existing categories" xml:space="preserve"><value>Существующие категории</value></data>
+  <data name="View" xml:space="preserve"><value>Открыть</value></data>
+  <data name="New category" xml:space="preserve"><value>Новая категория</value></data>
+  <data name="Format" xml:space="preserve"><value>Формат</value></data>
+  <data name="Parent" xml:space="preserve"><value>Родительская категория</value></data>
+  <data name="Top level" xml:space="preserve"><value>Верхний уровень</value></data>
+  <data name="Create category" xml:space="preserve"><value>Создать категорию</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Категория удалена.</value></data>
+  <data name="The category still contains topics or child categories." xml:space="preserve"><value>В категории ещё есть темы или дочерние категории.</value></data>
+  <data name="The category no longer exists." xml:space="preserve"><value>Категория больше не существует.</value></data>
+  <data name="Manage categories" xml:space="preserve"><value>Управление категориями</value></data>
+  <data name="Only an empty category without child categories or topics can be deleted." xml:space="preserve"><value>Удалить можно только пустую категорию без дочерних категорий и тем.</value></data>
+  <data name="Delete {0}?" xml:space="preserve"><value>Удалить «{0}»?</value></data>
+  <data name="Delete category" xml:space="preserve"><value>Удалить категорию</value></data>
+  <data name="Discussion" xml:space="preserve"><value>Обсуждение</value></data>
+  <data name="Questions and answers" xml:space="preserve"><value>Вопросы и ответы</value></data>
+  <data name="Announcement" xml:space="preserve"><value>Объявление</value></data>
+  <data name="The administrator identity could not be resolved." xml:space="preserve"><value>Не удалось определить администратора.</value></data>
+  <data name="The category could not be created." xml:space="preserve"><value>Не удалось создать категорию.</value></data>
+  <data name="Category created." xml:space="preserve"><value>Категория создана.</value></data>
+  <data name="Edit profile" xml:space="preserve"><value>Редактирование профиля</value></data>
+  <data name="Public profile" xml:space="preserve"><value>Публичный профиль</value></data>
+  <data name="This information appears beside your topics and replies. Your email and security settings remain private." xml:space="preserve"><value>Эти данные видны рядом с вашими темами и ответами. Email и настройки безопасности остаются приватными.</value></data>
+  <data name="Public URL" xml:space="preserve"><value>Публичный адрес</value></data>
+  <data name="Biography" xml:space="preserve"><value>О себе</value></data>
+  <data name="A short introduction, up to 500 characters." xml:space="preserve"><value>Краткое описание длиной до 500 символов.</value></data>
+  <data name="Save profile" xml:space="preserve"><value>Сохранить профиль</value></data>
+  <data name="View public profile" xml:space="preserve"><value>Открыть публичный профиль</value></data>
+  <data name="Skip to content" xml:space="preserve"><value>Перейти к содержимому</value></data>
+  <data name="Something went wrong." xml:space="preserve"><value>Что-то пошло не так.</value></data>
+  <data name="Reload" xml:space="preserve"><value>Перезагрузить</value></data>
+  <data name="Are you sure?" xml:space="preserve"><value>Вы уверены?</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Подтвердить</value></data>
+  <data name="Uploading" xml:space="preserve"><value>Загрузка</value></data>
+  <data name="The media could not be uploaded." xml:space="preserve"><value>Не удалось загрузить медиафайл.</value></data>
+  <data name="Access denied" xml:space="preserve"><value>Доступ запрещён</value></data>
+  <data name="You do not have access to this resource." xml:space="preserve"><value>У вас нет доступа к этому разделу.</value></data>
+  <data name="Login placeholder" xml:space="preserve"><value>admin или name@example.com</value></data>
+  <data name="Password placeholder" xml:space="preserve"><value>Введите пароль</value></data>
+  <data name="or" xml:space="preserve"><value>или</value></data>
+  <data name="Invalid login or password." xml:space="preserve"><value>Неверный логин или пароль.</value></data>
+  <data name="Error" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Topic pages" xml:space="preserve"><value>Страницы темы</value></data>
+  <data name="Previous" xml:space="preserve"><value>Назад</value></data>
+  <data name="Next" xml:space="preserve"><value>Далее</value></data>
+  <data name="Add a new passkey" xml:space="preserve"><value>Добавить новый ключ доступа</value></data>
+  <data name="Add another service to log in." xml:space="preserve"><value>Добавить другой сервис для входа.</value></data>
+  <data name="Add authenticator app" xml:space="preserve"><value>Добавить приложение-аутентификатор</value></data>
+  <data name="Android" xml:space="preserve"><value>Android</value></data>
+  <data name="Associate your {0} account." xml:space="preserve"><value>Связать учётную запись {0}.</value></data>
+  <data name="Authenticator app" xml:space="preserve"><value>Приложение-аутентификатор</value></data>
+  <data name="Authenticator code" xml:space="preserve"><value>Код аутентификатора</value></data>
+  <data name="Change email" xml:space="preserve"><value>Изменить email</value></data>
+  <data name="Change password" xml:space="preserve"><value>Изменить пароль</value></data>
+  <data name="Choose a new password · SpaceForum" xml:space="preserve"><value>Новый пароль · SpaceForum</value></data>
+  <data name="Configure authenticator app" xml:space="preserve"><value>Настройка приложения-аутентификатора</value></data>
+  <data name="Confirm email" xml:space="preserve"><value>Подтверждение email</value></data>
+  <data name="Confirm email change" xml:space="preserve"><value>Подтверждение изменения email</value></data>
+  <data name="Continue" xml:space="preserve"><value>Продолжить</value></data>
+  <data name="Create account · SpaceForum" xml:space="preserve"><value>Создание аккаунта · SpaceForum</value></data>
+  <data name="Delete account" xml:space="preserve"><value>Удалить аккаунт</value></data>
+  <data name="Delete data and close my account" xml:space="preserve"><value>Удалить данные и закрыть аккаунт</value></data>
+  <data name="Delete Personal Data" xml:space="preserve"><value>Удаление персональных данных</value></data>
+  <data name="Deleting this data will permanently remove your account, and this cannot be recovered." xml:space="preserve"><value>Удаление этих данных навсегда удалит аккаунт без возможности восстановления.</value></data>
+  <data name="Deleting your data permanently removes the account and cannot be undone." xml:space="preserve"><value>Удаление данных навсегда удалит аккаунт. Это действие нельзя отменить.</value></data>
+  <data name="Disable 2FA" xml:space="preserve"><value>Отключить 2FA</value></data>
+  <data name="Disable two-factor authentication (2FA)" xml:space="preserve"><value>Отключение двухфакторной аутентификации (2FA)</value></data>
+  <data name="Download data" xml:space="preserve"><value>Скачать данные</value></data>
+  <data name="Download the information associated with your account or permanently remove the account." xml:space="preserve"><value>Скачайте данные своего аккаунта или навсегда удалите его.</value></data>
+  <data name="Enter a name for your passkey" xml:space="preserve"><value>Введите название ключа доступа</value></data>
+  <data name="Enter a new name for your {0} passkey" xml:space="preserve"><value>Введите новое название для ключа доступа «{0}»</value></data>
+  <data name="Forget this browser" xml:space="preserve"><value>Забыть этот браузер</value></data>
+  <data name="Generate a new set of recovery codes" xml:space="preserve"><value>Создать новый набор кодов восстановления</value></data>
+  <data name="Generate Recovery Codes" xml:space="preserve"><value>Создать коды восстановления</value></data>
+  <data name="Generate two-factor authentication (2FA) recovery codes" xml:space="preserve"><value>Создание кодов восстановления 2FA</value></data>
+  <data name="If you lose your device and don't have the recovery codes you will lose access to your account." xml:space="preserve"><value>Если вы потеряете устройство без кодов восстановления, то утратите доступ к аккаунту.</value></data>
+  <data name="If you reset your authenticator key your authenticator app will not work until you reconfigure it." xml:space="preserve"><value>После сброса ключа приложение-аутентификатор не будет работать до повторной настройки.</value></data>
+  <data name="Invalid password reset" xml:space="preserve"><value>Недействительный сброс пароля</value></data>
+  <data name="Invalid user" xml:space="preserve"><value>Недействительный пользователь</value></data>
+  <data name="iOS" xml:space="preserve"><value>iOS</value></data>
+  <data name="Learn how to enable QR code generation" xml:space="preserve"><value>Как включить создание QR-кода</value></data>
+  <data name="Locked out" xml:space="preserve"><value>Аккаунт заблокирован</value></data>
+  <data name="Log in" xml:space="preserve"><value>Войти</value></data>
+  <data name="log in with a recovery code" xml:space="preserve"><value>войти с кодом восстановления</value></data>
+  <data name="Manage email" xml:space="preserve"><value>Управление email</value></data>
+  <data name="Manage your external logins" xml:space="preserve"><value>Управление внешними способами входа</value></data>
+  <data name="Manage your passkeys" xml:space="preserve"><value>Управление ключами доступа</value></data>
+  <data name="New email" xml:space="preserve"><value>Новый email</value></data>
+  <data name="No passkeys are registered." xml:space="preserve"><value>Ключи доступа не зарегистрированы.</value></data>
+  <data name="Old password" xml:space="preserve"><value>Текущий пароль</value></data>
+  <data name="Passkey name" xml:space="preserve"><value>Название ключа доступа</value></data>
+  <data name="Privacy" xml:space="preserve"><value>Конфиденциальность</value></data>
+  <data name="Privacy and cookie policy have not been accepted." xml:space="preserve"><value>Политика конфиденциальности и cookie не принята.</value></data>
+  <data name="Put these codes in a safe place." xml:space="preserve"><value>Сохраните эти коды в безопасном месте.</value></data>
+  <data name="Recovery Code" xml:space="preserve"><value>Код восстановления</value></data>
+  <data name="Recovery code verification" xml:space="preserve"><value>Проверка кода восстановления</value></data>
+  <data name="Recovery codes" xml:space="preserve"><value>Коды восстановления</value></data>
+  <data name="Registered Logins" xml:space="preserve"><value>Подключённые способы входа</value></data>
+  <data name="Remove" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Rename" xml:space="preserve"><value>Переименовать</value></data>
+  <data name="Reset authenticator app" xml:space="preserve"><value>Сбросить приложение-аутентификатор</value></data>
+  <data name="Reset authenticator key" xml:space="preserve"><value>Сбросить ключ аутентификатора</value></data>
+  <data name="Reset password · SpaceForum" xml:space="preserve"><value>Сброс пароля · SpaceForum</value></data>
+  <data name="Reset recovery codes" xml:space="preserve"><value>Обновить коды восстановления</value></data>
+  <data name="reset your authenticator keys." xml:space="preserve"><value>сбросить ключи аутентификатора.</value></data>
+  <data name="Scan the QR code or enter this key in your authenticator app:" xml:space="preserve"><value>Отсканируйте QR-код или введите этот ключ в приложении-аутентификатор:</value></data>
+  <data name="Send verification email" xml:space="preserve"><value>Отправить письмо для подтверждения</value></data>
+  <data name="Set password" xml:space="preserve"><value>Установить пароль</value></data>
+  <data name="Set up authenticator app" xml:space="preserve"><value>Настроить приложение-аутентификатор</value></data>
+  <data name="Set your password" xml:space="preserve"><value>Установите пароль</value></data>
+  <data name="The password reset link is invalid." xml:space="preserve"><value>Ссылка для сброса пароля недействительна.</value></data>
+  <data name="There are no external authentication services configured." xml:space="preserve"><value>Внешние сервисы аутентификации не настроены.</value></data>
+  <data name="This account has been locked out, please try again later." xml:space="preserve"><value>Этот аккаунт заблокирован. Повторите попытку позже.</value></data>
+  <data name="This action only disables 2FA." xml:space="preserve"><value>Это действие только отключает 2FA.</value></data>
+  <data name="To use an authenticator app go through the following steps:" xml:space="preserve"><value>Чтобы использовать приложение-аутентификатор, выполните следующие шаги:</value></data>
+  <data name="Two-factor authentication (2FA)" xml:space="preserve"><value>Двухфакторная аутентификация (2FA)</value></data>
+  <data name="Update password" xml:space="preserve"><value>Обновить пароль</value></data>
+  <data name="Verification Code" xml:space="preserve"><value>Код подтверждения</value></data>
+  <data name="Verify" xml:space="preserve"><value>Подтвердить</value></data>
+  <data name="You have {0} recovery codes left." xml:space="preserve"><value>У вас осталось кодов восстановления: {0}.</value></data>
+  <data name="You have 1 recovery code left." xml:space="preserve"><value>У вас остался 1 код восстановления.</value></data>
+  <data name="You have no recovery codes left." xml:space="preserve"><value>У вас не осталось кодов восстановления.</value></data>
+  <data name="You have reached the maximum number of allowed passkeys. Please delete one before adding a new one." xml:space="preserve"><value>Достигнуто максимальное количество ключей доступа. Удалите один перед добавлением нового.</value></data>
+  <data name="You have successfully authenticated with {0}. Enter an email address below to finish registering." xml:space="preserve"><value>Вы успешно вошли через {0}. Введите email ниже, чтобы завершить регистрацию.</value></data>
+  <data name="You must accept the policy before you can enable two factor authentication." xml:space="preserve"><value>Перед включением двухфакторной аутентификации необходимо принять политику.</value></data>
+  <data name="You must generate a new set of recovery codes before you can log in with a recovery code." xml:space="preserve"><value>Создайте новый набор кодов восстановления, прежде чем входить с таким кодом.</value></data>
+  <data name="Your account contains personal data that you have provided to SpaceForum." xml:space="preserve"><value>Ваш аккаунт содержит персональные данные, которые вы предоставили SpaceForum.</value></data>
+  <data name="Your login is protected with an authenticator app. Enter your authenticator code below." xml:space="preserve"><value>Вход защищён приложением-аутентификатором. Введите код ниже.</value></data>
+  <data name="Install a compatible authenticator app on your phone." xml:space="preserve"><value>Установите совместимое приложение-аутентификатор на телефон.</value></data>
+  <data name="After adding the key, enter the verification code generated by the app." xml:space="preserve"><value>После добавления ключа введите код подтверждения из приложения.</value></data>
+  <data name="Enter the code" xml:space="preserve"><value>Введите код</value></data>
+  <data name="Generating new recovery codes does not change your authenticator key." xml:space="preserve"><value>Создание новых кодов восстановления не изменяет ключ аутентификатора.</value></data>
+  <data name="Disabling 2FA does not change your authenticator key." xml:space="preserve"><value>Отключение 2FA не изменяет ключ аутентификатора.</value></data>
+  <data name="Remember this machine" xml:space="preserve"><value>Запомнить это устройство</value></data>
+  <data name="No access to your authenticator device?" xml:space="preserve"><value>Нет доступа к устройству с аутентификатором?</value></data>
+  <data name="This recovery-code login will not be remembered until you use an authenticator code or disable 2FA." xml:space="preserve"><value>Вход с кодом восстановления не будет запомнен, пока вы не используете код аутентификатора или не отключите 2FA.</value></data>
+  <data name="Breadcrumb" xml:space="preserve"><value>Навигационная цепочка</value></data>
+  <data name="Topic rating" xml:space="preserve"><value>Рейтинг темы</value></data>
+  <data name="Upvote topic" xml:space="preserve"><value>Повысить рейтинг темы</value></data>
+  <data name="Upvote" xml:space="preserve"><value>Голос за</value></data>
+  <data name="Topic score" xml:space="preserve"><value>Рейтинг темы</value></data>
+  <data name="Downvote topic" xml:space="preserve"><value>Понизить рейтинг темы</value></data>
+  <data name="Downvote" xml:space="preserve"><value>Голос против</value></data>
+  <data name="Topic controls" xml:space="preserve"><value>Управление темой</value></data>
+  <data name="Post navigator" xml:space="preserve"><value>Навигация по сообщениям</value></data>
+  <data name="Jump to post" xml:space="preserve"><value>Перейти к сообщению</value></data>
+  <data name="Primary navigation" xml:space="preserve"><value>Основная навигация</value></data>
+  <data name="Mobile navigation" xml:space="preserve"><value>Мобильная навигация</value></data>
+  <data name="Sort discussions" xml:space="preserve"><value>Сортировка обсуждений</value></data>
+  <data name="Category not found" xml:space="preserve"><value>Категория не найдена</value></data>
+  <data name="Choose a category" xml:space="preserve"><value>Выберите категорию</value></data>
+  <data name="Categories · SpaceForum" xml:space="preserve"><value>Категории · SpaceForum</value></data>
+  <data name="New topic · SpaceForum" xml:space="preserve"><value>Новая тема · SpaceForum</value></data>
+  <data name="SpaceForum · thoughtful conversations" xml:space="preserve"><value>SpaceForum · содержательные беседы</value></data>
+  <data name="Search · SpaceForum" xml:space="preserve"><value>Поиск · SpaceForum</value></data>
+  <data name="No discussions yet. Start the first one." xml:space="preserve"><value>Обсуждений пока нет. Начните первое.</value></data>
+  <data name="Error." xml:space="preserve"><value>Ошибка.</value></data>
+  <data name="An error occurred while processing your request." xml:space="preserve"><value>При обработке запроса произошла ошибка.</value></data>
+  <data name="Request ID:" xml:space="preserve"><value>Идентификатор запроса:</value></data>
+  <data name="Development mode" xml:space="preserve"><value>Режим разработки</value></data>
+  <data name="The Development environment displays more detailed error information." xml:space="preserve"><value>Среда Development показывает более подробную информацию об ошибках.</value></data>
+  <data name="Do not enable the Development environment in deployed applications." xml:space="preserve"><value>Не включайте среду Development в опубликованном приложении.</value></data>
+  <data name="It can expose sensitive exception information. Enable it only for local debugging and restart the application." xml:space="preserve"><value>Она может раскрыть конфиденциальные сведения об исключениях. Используйте её только для локальной отладки и перезапустите приложение.</value></data>
+  <data name="Not found" xml:space="preserve"><value>Не найдено</value></data>
+  <data name="Sorry, the content you are looking for does not exist." xml:space="preserve"><value>Запрошенный материал не существует.</value></data>
+  <data name="Log in using your {0} account" xml:space="preserve"><value>Войти через аккаунт {0}</value></data>
+  <data name="Remove this {0} login from your account" xml:space="preserve"><value>Удалить вход через {0} из аккаунта</value></data>
+  <data name="Unnamed passkey" xml:space="preserve"><value>Ключ доступа без имени</value></data>
+  <data name="Rename this passkey" xml:space="preserve"><value>Переименовать этот ключ доступа</value></data>
+  <data name="Remove this passkey from your account" xml:space="preserve"><value>Удалить этот ключ доступа из аккаунта</value></data>
+  <data name="SpaceForum is a modern community for programming, computer games, thoughtful discussions, and useful answers." xml:space="preserve"><value>SpaceForum — современное сообщество о программировании, компьютерных играх, содержательных обсуждениях и полезных ответах.</value></data>
+</root>

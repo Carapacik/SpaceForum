@@ -1,0 +1,66 @@
+@page "/account/resendemailconfirmation"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using SpaceForum.Infrastructure.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IEmailSender<ApplicationUser> EmailSender
+@inject NavigationManager NavigationManager
+
+<PageTitle>@T["Resend email confirmation"] · SpaceForum</PageTitle>
+
+<div class="sf-auth-shell">
+    <header class="mb-6">
+        <p class="sf-eyebrow">@T["Account security"]</p>
+        <h1 class="mt-2 font-display text-3xl font-bold">@T["Resend email confirmation"]</h1>
+        <p class="mt-2 text-content-muted">@T["Enter the email address used for your account."]</p>
+    </header>
+
+    <StatusMessage Message="@message" />
+    <EditForm Model="Input" FormName="resend-email-confirmation" OnValidSubmit="OnValidSubmitAsync" method="post" class="sf-auth-card sf-required-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+        <div>
+            <label for="Input.Email">@T["Email"]</label>
+            <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" type="email" autocomplete="email" aria-required="true" required placeholder="name@example.com" />
+            <ValidationMessage For="() => Input.Email" class="text-danger" />
+        </div>
+        <button type="submit" class="sf-submit w-full">@T["Resend confirmation"]</button>
+    </EditForm>
+</div>
+
+@code {
+    private string? message;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = default!;
+
+    protected override void OnInitialized() => Input ??= new();
+
+    private async Task OnValidSubmitAsync()
+    {
+        var user = await UserManager.FindByEmailAsync(Input.Email);
+        if (user is not null)
+        {
+            var userId = await UserManager.GetUserIdAsync(user);
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = NavigationManager.GetUriWithQueryParameters(
+                NavigationManager.ToAbsoluteUri("account/confirmemail").AbsoluteUri,
+                new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code });
+            await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+        }
+
+        message = T["Verification email sent. Please check your email."];
+    }
+
+    private sealed class InputModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; } = string.Empty;
+    }
+}

@@ -1,0 +1,78 @@
+@page "/categories"
+
+@using SpaceForum.Application.Forums
+@using SpaceForum.Domain.Forums
+
+@inject GetCategoriesHandler GetCategories
+
+<PageTitle>@T["Categories · SpaceForum"]</PageTitle>
+
+<div class="space-y-5">
+    <header>
+        <p class="sf-eyebrow">@T["Browse"]</p>
+        <h1 class="mt-1 font-display text-3xl font-bold tracking-[-0.03em]">@T["Categories"]</h1>
+        <p class="mt-2 max-w-2xl text-content-muted">@T["Programming and games"]</p>
+    </header>
+
+    @if (categories.Count == 0)
+    {
+        <section class="sf-card px-5 py-12 text-center medium:px-8">
+            <h2 class="font-display text-xl font-bold">@T["No categories yet"]</h2>
+            <p class="mx-auto mt-2 max-w-md text-sm text-content-muted">@T["No categories help"]</p>
+        </section>
+    }
+    else
+    {
+        <div class="space-y-5">
+            @foreach (var parent in categories.Where(category => category.ParentId is null))
+            {
+                <section class="sf-card overflow-hidden" aria-labelledby="@($"category-{parent.Id}")">
+                    <a href="@($"/categories/{parent.Slug}")" class="block border-b px-5 py-5 transition-colors hover:bg-surface-muted medium:px-6">
+                        <div class="flex flex-wrap items-start justify-between gap-3">
+                            <div>
+                                <h2 id="@($"category-{parent.Id}")" class="font-display text-xl font-bold">@parent.Name</h2>
+                                <p class="mt-1 max-w-2xl text-sm text-content-muted">@parent.Description</p>
+                            </div>
+                            <span class="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary">@FormatName(parent.Format)</span>
+                        </div>
+                    </a>
+                    @{ var children = categories.Where(category => category.ParentId == parent.Id).ToArray(); }
+                    @if (children.Length > 0)
+                    {
+                        <div class="grid divide-y medium:grid-cols-2 medium:divide-x medium:divide-y-0">
+                            @foreach (var child in children)
+                            {
+                                <a href="@($"/categories/{child.Slug}")" class="min-w-0 px-5 py-4 transition-colors hover:bg-surface-muted medium:px-6">
+                                    <div class="flex items-start gap-3">
+                                        <span class="mt-1 size-2.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+                                        <span class="min-w-0">
+                                            <span class="block font-bold">@child.Name</span>
+                                            <span class="mt-1 block text-sm text-content-muted">@child.Description</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                </section>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private IReadOnlyList<CategoryView> categories = [];
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync() =>
+        categories = await GetCategories.ListAsync(HttpContext.RequestAborted);
+
+    private static string FormatName(CategoryFormat format) => format switch
+    {
+        CategoryFormat.QuestionAndAnswer => "Q&A",
+        CategoryFormat.Announcement => "Announcements",
+        _ => "Discussion",
+    };
+}

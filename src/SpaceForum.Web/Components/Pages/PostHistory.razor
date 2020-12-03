@@ -1,0 +1,7 @@
+@page "/posts/{PostId:guid}/history"
+@using SpaceForum.Application.Forums
+@inject IForumFeatureRepository Features
+<PageTitle>@T["Edit history"] · SpaceForum</PageTitle>
+<div class="space-y-5"><header><p class="sf-eyebrow">@T["Post history"]</p><h1 class="mt-1 font-display text-3xl font-bold">@T["Edit history"]</h1></header>
+@if(revisions.Count==0){<div class="sf-card p-8 text-center text-content-muted">@T["This post has no edits."]</div>}else{@foreach(var revision in revisions){<article class="sf-card p-5"><p class="text-sm text-content-muted">@@@revision.EditorLogin · <time datetime="@revision.EditedAt.ToString("O")" data-local-time="date-time">@revision.EditedAt</time></p><div class="mt-4 grid gap-4 expanded:grid-cols-2"><div><h2 class="font-bold">@T["Before"]</h2><pre class="mt-2 overflow-auto rounded-control bg-surface-muted p-3 whitespace-pre-wrap">@revision.PreviousBody</pre></div><div><h2 class="font-bold">@T["After"]</h2><pre class="mt-2 overflow-auto rounded-control bg-surface-muted p-3 whitespace-pre-wrap">@revision.Body</pre></div></div></article>}}</div>
+@code { [Parameter] public Guid PostId {get;set;} private IReadOnlyList<PostRevisionView> revisions=[]; [CascadingParameter] private HttpContext HttpContext {get;set;}=default!; protected override async Task OnParametersSetAsync()=>revisions=await Features.GetPostRevisionsAsync(PostId,HttpContext.RequestAborted); }
